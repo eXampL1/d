@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wallet erstellen</title>
+  <style>
+    body {
+      background-color: #35068c;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .button {
+      background-color: #35068c;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .wallet-info {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Wallet erstellen</h1>
+    <p>Klicke auf den Button, um eine Wallet zu erstellen:</p>
+    <button class="button" onclick="createWallet()">Wallet erstellen</button>
+
+    <div class="wallet-info" id="walletInfo" style="display: none;">
+      <h2>Deine Wallet</h2>
+      <p><strong>Wallet Adresse:</strong> <span id="walletAddress"></span></p>
+      <p><strong>Private Key:</strong> <span id="privateKey"></span></p>
+      <p><strong>RSHC-Balance:</strong> <span id="balance"></span> RSHC</p>
+    </div>
+  </div>
+
+  <script>
+    function createWallet() {
+      // Generiere Wallet-Adresse und privaten Schlüssel
+      var walletAddress = generateWalletAddress();
+      var privateKey = generatePrivateKey();
+
+      // Rufe RSHC-Balance ab (Beispiel: 100 RSHC)
+      var balance = getBalance(walletAddress);
+
+      // Zeige Wallet-Informationen an
+      document.getElementById('walletAddress').innerText = walletAddress;
+      document.getElementById('privateKey').innerText = privateKey;
+      document.getElementById('balance').innerText = balance;
+
+      // Blende das Wallet-Info-Element ein
+      document.getElementById('walletInfo').style.display = 'block';
+    }
+
+    function generateWalletAddress() {
+      // Hier kannst du die Logik zur Generierung einer Wallet-Adresse implementieren
+      // Beispiel: Zufällige Generierung
+      var walletAddress = '0x' + generateRandomHex(40);
+      return walletAddress;
+    }
+
+    function generatePrivateKey() {
+      // Hier kannst du die Logik zur Generierung eines privaten Schlüssels implementieren
+      // Beispiel: Zufällige Generierung
+      var privateKey = generateRandomHex(64);
+      return privateKey;
+    }
+
+    function getBalance(walletAddress) {
+      // Hier kannst du die Logik zur Abfrage der RSHC-Balance implementieren
+      // Beispiel: Rückgabe einer festen Balance (100 RSHC)
+      return '100';
+    }
+
+    function generateRandomHex(length) {
+      var hex = '';
+      var possible = 'abcdef0123456789';
+
+      for (var i = 0; i < length; i++) {
+        hex += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+
+      return hex;
+    }
+  </script>
+</body>
+</html>
