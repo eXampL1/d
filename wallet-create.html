@@ -36,10 +36,47 @@
       font-size: 16px;
       border-radius: 4px;
       cursor: pointer;
+      margin-top: 20px;
     }
 
     .wallet-info {
       margin-top: 30px;
+      text-align: left;
+    }
+
+    .wallet-info p {
+      color: #000000;
+    }
+
+    .login-button {
+      background-color: #35068c;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .send-coins-button {
+      background-color: #35068c;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -54,10 +91,17 @@
       <p><strong>Wallet Adresse:</strong> <span id="walletAddress"></span></p>
       <p><strong>Private Key:</strong> <span id="privateKey"></span></p>
       <p><strong>RSHC-Balance:</strong> <span id="balance"></span> RSHC</p>
+      <input type="number" id="sendAmount" class="input-field" placeholder="Menge eingeben">
+      <input type="text" id="recipientAddress" class="input-field" placeholder="Empfänger-Adresse eingeben">
+      <button class="send-coins-button" onclick="sendCoins()">Coins senden</button>
+      <button class="login-button" onclick="login()">In die Wallet einloggen</button>
     </div>
   </div>
 
   <script>
+    // Setze den Preis des Coins auf 1.31 $
+    var coinPrice = 1.31;
+
     function createWallet() {
       // Generiere Wallet-Adresse und privaten Schlüssel
       var walletAddress = generateWalletAddress();
@@ -104,6 +148,48 @@
       }
 
       return hex;
+    }
+
+    function login() {
+      // Hier kannst du die Logik für den Einloggen-Button implementieren
+      // Beispiel: Weiterleitung zur Einloggen-Seite
+      alert("Du wirst zur Einloggen-Seite weitergeleitet.");
+    }
+
+    function sendCoins() {
+      var sendAmount = parseFloat(document.getElementById('sendAmount').value);
+      var recipientAddress = document.getElementById('recipientAddress').value;
+
+      // Validiere Eingabewerte
+      if (isNaN(sendAmount) || sendAmount <= 0 || !recipientAddress) {
+        alert('Ungültige Eingabe');
+        return;
+      }
+
+      // Führe den Coin-Sendevorgang durch
+      var success = sendCoinsToAddress(sendAmount, recipientAddress);
+
+      if (success) {
+        alert('Coins wurden erfolgreich gesendet');
+      } else {
+        alert('Fehler beim Senden der Coins');
+      }
+    }
+
+    function sendCoinsToAddress(amount, address) {
+      // Hier kannst du die Logik für den Coin-Sendevorgang implementieren
+      // Beispiel: Überprüfung der ausreichenden Balance und Aktualisierung der Balance
+      var balance = parseFloat(document.getElementById('balance').innerText);
+
+      if (amount <= balance) {
+        // Aktualisiere die Balance
+        balance -= amount;
+        document.getElementById('balance').innerText = balance.toFixed(2);
+
+        return true;
+      } else {
+        return false;
+      }
     }
   </script>
 </body>
