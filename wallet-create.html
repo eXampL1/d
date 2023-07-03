@@ -33,6 +33,7 @@
       display: block;
       font-weight: bold;
       margin-bottom: 5px;
+      color: #000000; /* Schriftfarbe auf Schwarz setzen */
     }
 
     .form-group input {
@@ -72,14 +73,40 @@
 
   <script>
     function createWallet() {
-      // Hier kannst du den Code für das Erstellen der Wallet implementieren
-      // Beispiel: Generierung der Adresse und des privaten Schlüssels
-      var walletAddress = 'Wallet-Adresse';
-      var privateKey = 'Privater Schlüssel';
+      // Erzeuge ein neues Wallet
+      var wallet = generateWallet();
 
       // Setze die generierten Werte in die entsprechenden Eingabefelder
-      document.getElementById('walletAddress').value = walletAddress;
-      document.getElementById('privateKey').value = privateKey;
+      document.getElementById('walletAddress').value = wallet.address;
+      document.getElementById('privateKey').value = wallet.privateKey;
+    }
+
+    function generateWallet() {
+      // Hier kannst du den Code für das Erstellen der Wallet implementieren
+      // Beispiel: Generierung der Adresse und des privaten Schlüssels
+
+      // Generiere eine zufällige Adresse
+      var walletAddress = generateRandomAddress();
+      // Generiere einen zufälligen privaten Schlüssel
+      var privateKey = generateRandomPrivateKey();
+
+      // Rückgabe der generierten Werte als Objekt
+      return {
+        address: walletAddress,
+        privateKey: privateKey
+      };
+    }
+
+    function generateRandomAddress() {
+      // Hier kannst du den Code für die Generierung einer zufälligen Adresse implementieren
+      // Beispiel: Zufällige Zeichenkette
+      return '0x' + Math.random().toString(36).substr(2, 10);
+    }
+
+    function generateRandomPrivateKey() {
+      // Hier kannst du den Code für die Generierung eines zufälligen privaten Schlüssels implementieren
+      // Beispiel: Zufällige Zeichenkette
+      return '0x' + Math.random().toString(36).substr(2, 16);
     }
   </script>
 </body>
