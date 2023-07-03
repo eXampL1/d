@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wallet</title>
+  <title>Wallet erstellen</title>
   <style>
     body {
       background-color: #35068c;
@@ -26,6 +26,7 @@
 
     .form-group {
       margin-bottom: 20px;
+      text-align: center; /* Zentriert den Text */
     }
 
     .form-group label {
@@ -42,15 +43,7 @@
       border-radius: 4px;
     }
 
-    .coin-info {
-      margin-bottom: 20px;
-    }
-
-    .coin-info p {
-      font-size: 18px;
-    }
-
-    .send-button {
+    .create-button {
       background-color: #35068c;
       color: #ffffff;
       border: none;
@@ -59,58 +52,34 @@
       border-radius: 4px;
       cursor: pointer;
     }
-
-    .response-message {
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Wallet</h1>
-    <div class="coin-info">
-      <p>RSHC Coin Preis: 1.31 $</p>
-      <p>Begrenzt auf 1.000.000 Coins</p>
-    </div>
+    <h1>Wallet erstellen</h1>
     <form>
       <div class="form-group">
-        <label for="receiver">Empfänger:</label>
-        <input type="text" id="receiver" placeholder="Empfängeradresse eingeben">
+        <label for="walletAddress">Wallet Adresse:</label>
+        <input type="text" id="walletAddress" placeholder="Wallet Adresse erstellen" readonly>
       </div>
       <div class="form-group">
-        <label for="amount">Menge:</label>
-        <input type="text" id="amount" placeholder="Menge eingeben">
+        <label for="privateKey">Privater Schlüssel:</label>
+        <input type="text" id="privateKey" placeholder="Privater Schlüssel erstellen" readonly>
       </div>
-      <button class="send-button" onclick="sendTokens()">Senden</button>
+      <button class="create-button" onclick="createWallet()">Wallet erstellen</button>
     </form>
-    <div class="response-message" id="responseMessage"></div>
   </div>
 
   <script>
-    function sendTokens() {
-      var receiver = document.getElementById('receiver').value;
-      var amount = document.getElementById('amount').value;
+    function createWallet() {
+      // Hier kannst du den Code für das Erstellen der Wallet implementieren
+      // Beispiel: Generierung der Adresse und des privaten Schlüssels
+      var walletAddress = 'Wallet-Adresse';
+      var privateKey = 'Privater Schlüssel';
 
-      var request = new XMLHttpRequest();
-      request.open('POST', 'http://localhost:3000/api/send', true);
-      request.setRequestHeader('Content-Type', 'application/json');
-
-      request.onload = function() {
-        if (request.status === 200) {
-          var response = JSON.parse(request.responseText);
-          document.getElementById('responseMessage').textContent = response.message;
-        } else {
-          document.getElementById('responseMessage').textContent = 'Fehler beim Senden der Tokens';
-        }
-      };
-
-      var data = JSON.stringify({
-        senderAddress: 'Absenderadresse',
-        recipientAddress: receiver,
-        amount: amount
-      });
-
-      request.send(data);
+      // Setze die generierten Werte in die entsprechenden Eingabefelder
+      document.getElementById('walletAddress').value = walletAddress;
+      document.getElementById('privateKey').value = privateKey;
     }
   </script>
 </body>
