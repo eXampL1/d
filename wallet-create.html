@@ -26,14 +26,14 @@
 
     .form-group {
       margin-bottom: 20px;
-      text-align: center; /* Zentriert den Text */
+      text-align: center;
     }
 
     .form-group label {
       display: block;
       font-weight: bold;
       margin-bottom: 5px;
-      color: #000000; /* Schriftfarbe auf Schwarz setzen */
+      color: #000000;
     }
 
     .form-group input {
@@ -44,7 +44,8 @@
       border-radius: 4px;
     }
 
-    .create-button {
+    .create-button,
+    .send-button {
       background-color: #35068c;
       color: #ffffff;
       border: none;
@@ -52,6 +53,12 @@
       font-size: 16px;
       border-radius: 4px;
       cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .balance {
+      font-weight: bold;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -61,24 +68,46 @@
     <form>
       <div class="form-group">
         <label for="walletAddress">Wallet Adresse:</label>
-        <input type="text" id="walletAddress" placeholder="Wallet Adresse erstellen" readonly>
+        <input type="text" id="walletAddress" placeholder="Wallet Adresse" readonly>
       </div>
       <div class="form-group">
         <label for="privateKey">Privater Schlüssel:</label>
-        <input type="text" id="privateKey" placeholder="Privater Schlüssel erstellen" readonly>
+        <input type="text" id="privateKey" placeholder="Privater Schlüssel" readonly>
       </div>
       <button class="create-button" onclick="createWallet()">Wallet erstellen</button>
     </form>
+
+    <h1>Coins senden</h1>
+    <form>
+      <div class="form-group">
+        <label for="receiverAddress">Empfänger Adresse:</label>
+        <input type="text" id="receiverAddress" placeholder="Empfänger Adresse">
+      </div>
+      <div class="form-group">
+        <label for="amount">Betrag:</label>
+        <input type="number" id="amount" placeholder="Betrag">
+      </div>
+      <button class="send-button" onclick="sendCoins()">Coins senden</button>
+    </form>
+
+    <div class="balance" id="balance">Guthaben: $0</div>
   </div>
 
   <script>
+    var wallet = null;
+    var balance = 0;
+
     function createWallet() {
       // Erzeuge ein neues Wallet
-      var wallet = generateWallet();
+      wallet = generateWallet();
 
       // Setze die generierten Werte in die entsprechenden Eingabefelder
       document.getElementById('walletAddress').value = wallet.address;
       document.getElementById('privateKey').value = wallet.privateKey;
+
+      // Setze den Guthabenwert
+      balance = 1000;
+      updateBalance();
     }
 
     function generateWallet() {
@@ -107,6 +136,25 @@
       // Hier kannst du den Code für die Generierung eines zufälligen privaten Schlüssels implementieren
       // Beispiel: Zufällige Zeichenkette
       return '0x' + Math.random().toString(36).substr(2, 16);
+    }
+
+    function sendCoins() {
+      var receiverAddress = document.getElementById('receiverAddress').value;
+      var amount = parseInt(document.getElementById('amount').value);
+
+      if (balance >= amount) {
+        balance -= amount;
+        updateBalance();
+
+        alert('Coins erfolgreich gesendet an ' + receiverAddress);
+      } else {
+        alert('Nicht genügend Guthaben!');
+      }
+    }
+
+    function updateBalance() {
+      var balanceElement = document.getElementById('balance');
+      balanceElement.textContent = 'Guthaben: $' + balance.toFixed(2);
     }
   </script>
 </body>
