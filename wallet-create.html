@@ -183,11 +183,11 @@
 
     // JavaScript-Code zum Empfangen von Coins
     function receiveCoins() {
-      var address = document.getElementById('addressInput').value;
+      var address = generateRandomAddress();
       var amount = document.getElementById('amountInput').value;
 
-      if (address === '' || amount === '') {
-        alert('Bitte füllen Sie alle Felder aus!');
+      if (amount === '') {
+        alert('Bitte geben Sie den Betrag ein!');
         return;
       }
 
@@ -196,7 +196,7 @@
 
       var transaction = {
         type: 'Receive',
-        sender: address,
+        sender: 'N/A',
         recipient: address,
         amount: amount
       };
@@ -204,7 +204,7 @@
       displayTransaction(transaction);
       updateBalance(address);
 
-      alert(amount + ' Coins wurden erfolgreich von ' + address + ' empfangen!');
+      alert(amount + ' Coins wurden erfolgreich empfangen! Wallet-Adresse: ' + address);
     }
 
     // Funktion zur Anzeige einer Transaktion im Transaktionsverlauf
@@ -253,9 +253,6 @@
 
       return result;
     }
-
-    // Generiere die Wallet-Adresse und den privaten Schlüssel beim Laden der Seite
-    window.onload = generateWallet;
   </script>
 </body>
 </html>
