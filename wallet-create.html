@@ -55,18 +55,49 @@
       color: #666666;
     }
 
+    .balance {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333333;
+    }
+
     .button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #4caf50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #8e44ad;
       color: #ffffff;
       text-decoration: none;
-      border-radius: 5px;
+      border: none;
       cursor: pointer;
     }
 
     .button:hover {
-      background-color: #45a049;
+      background-color: #7d3c98;
+    }
+
+    .receive-button {
+      background-color: #9b59b6;
+    }
+
+    .receive-button:hover {
+      background-color: #8e44ad;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .action-button-label {
+      font-size: 12px;
+      color: #666666;
+      margin-top: 5px;
+      text-align: center;
     }
 
     .transaction-history {
@@ -88,10 +119,6 @@
   <div class="container">
     <h1>MetaMask-like Interface</h1>
 
-    <div class="wallet-actions">
-      <button class="button" onclick="generateWallet()">Create Wallet</button>
-    </div>
-
     <div class="coin">
       <div class="coin-name">RSHC</div>
       <div class="coin-price">$1.31</div>
@@ -101,26 +128,23 @@
       <div class="wallet-address">Wallet-Adresse:</div>
       <textarea id="addressInput" class="secret-phrase" placeholder="Geben Sie die Wallet-Adresse ein" rows="2" readonly></textarea>
       <div class="secret-phrase">Privater Schlüssel:</div>
-      <textarea id="privateKeyInput" class="secret-phrase" placeholder="Privater Schlüssel wird generiert" rows="2" readonly></textarea>
-      <div class="balance" id="balance"></div>
+      <textarea id="privateKeyInput" class="secret-phrase" placeholder="Privater Schlüssel wird generiert..." rows="2" readonly></textarea>
+      <div class="balance">Kontostand: <span id="balance">100 Coins</span></div>
     </div>
 
-    <div class="actions">
-      <h2>Aktionen</h2>
+    <div class="action-buttons">
       <div>
-        <label for="recipientInput">Empfänger-Adresse:</label>
-        <textarea id="recipientInput" placeholder="Geben Sie die Empfänger-Wallet-Adresse ein" rows="2"></textarea>
+        <button class="button" onclick="generateWallet()">Erstellen</button>
+        <div class="action-button-label">Erstelle Wallet</div>
       </div>
       <div>
-        <label for="amountInput">Betrag:</label>
-        <input type="number" id="amountInput" placeholder="Geben Sie den zu sendenden Betrag ein" />
+        <button class="button receive-button" onclick="displayWalletAddress()">+</button>
+        <div class="action-button-label">Empfangen</div>
       </div>
-      <button class="button" onclick="sendCoins()">Coins senden</button>
-      <button class="button" onclick="receiveCoins()">Coins empfangen</button>
     </div>
 
     <div class="transaction-history">
-      <h2>Transaktionsverlauf</h2>
+      <div class="transaction-history-title">Transaktionsverlauf</div>
       <div id="transactionHistory"></div>
     </div>
   </div>
@@ -160,99 +184,10 @@
       hasCreatedWallet = true;
     }
 
-    // Funktion zur Abrufung der IP-Adresse des Clients
-    function getIPAddress() {
-      // Hier kannst du den Code einfügen, um die IP-Adresse des Clients zu erhalten
-      // Dies kann serverseitig oder mit einer externen API erfolgen
-      // Da dies ein Frontend-Beispiel ist, wird statisch '0.0.0.0' als IP-Adresse zurückgegeben
-      return '0.0.0.0';
-    }
-
-    // JavaScript-Code zum Senden von Coins
-    function sendCoins() {
+    // JavaScript-Code zur Anzeige der generierten Wallet-Adresse
+    function displayWalletAddress() {
       var address = document.getElementById('addressInput').value;
-      var recipient = document.getElementById('recipientInput').value;
-      var amount = document.getElementById('amountInput').value;
-
-      if (address === '' || recipient === '' || amount === '') {
-        alert('Bitte füllen Sie alle Felder aus!');
-        return;
-      }
-
-      if (wallets[address] < amount) {
-        alert('Nicht genügend Coins auf der Wallet!');
-        return;
-      }
-
-      // Verringere den Kontostand der sendenden Wallet
-      wallets[address] -= amount;
-
-      // Hier kannst du den Code zum Senden von Coins implementieren
-      // Beispiel: Annahme, dass der Sendevorgang erfolgreich ist
-
-      // Erhöhe den Kontostand der empfangenden Wallet
-      wallets[recipient] += parseInt(amount);
-
-      var transaction = {
-        type: 'Send',
-        sender: address,
-        recipient: recipient,
-        amount: amount
-      };
-
-      displayTransaction(transaction);
-      updateBalance(address);
-
-      alert(amount + ' Coins wurden erfolgreich an ' + recipient + ' gesendet!');
-    }
-
-    // JavaScript-Code zum Empfangen von Coins
-    function receiveCoins() {
-      var address = document.getElementById('addressInput').value;
-      var amount = prompt('Geben Sie den zu empfangenden Betrag ein');
-
-      if (amount === null || amount === '') {
-        alert('Bitte geben Sie den zu empfangenden Betrag ein!');
-        return;
-      }
-
-      // Erhöhe den Kontostand der empfangenden Wallet
-      wallets[address] += parseInt(amount);
-
-      var transaction = {
-        type: 'Receive',
-        sender: '',
-        recipient: address,
-        amount: amount
-      };
-
-      displayTransaction(transaction);
-      updateBalance(address);
-
-      alert(amount + ' Coins wurden erfolgreich empfangen! Wallet-Adresse: ' + address);
-    }
-
-    // Funktion zum Anzeigen einer Transaktion im Transaktionsverlauf
-    function displayTransaction(transaction) {
-      var transactionHistory = document.getElementById('transactionHistory');
-
-      var transactionElement = document.createElement('div');
-      transactionElement.classList.add('transaction');
-
-      var transactionType = document.createElement('span');
-      transactionType.innerHTML = transaction.type + ': ';
-      transactionElement.appendChild(transactionType);
-
-      var transactionDetails = document.createElement('span');
-      transactionDetails.innerHTML = transaction.amount + ' Coins von ' + transaction.sender + ' an ' + transaction.recipient;
-      transactionElement.appendChild(transactionDetails);
-
-      transactionHistory.appendChild(transactionElement);
-    }
-
-    // Funktion zum Aktualisieren des Kontostands
-    function updateBalance(address) {
-      document.getElementById('balance').innerText = wallets[address] + ' Coins';
+      alert('Ihre generierte Wallet-Adresse lautet:\n' + address);
     }
 
     // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
@@ -260,7 +195,7 @@
       var address = '0x';
       var characters = '0123456789ABCDEFabcdef';
 
-      for (var i = 0; i < 30; i++) {
+      for (var i = 0; i < 32; i++) {
         address += characters.charAt(Math.floor(Math.random() * characters.length));
       }
 
