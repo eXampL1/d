@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MetaMask-like Interface</title>
+  <title>RSHC Wallet</title>
   <style>
     /* CSS-Styling für das MetaMask-Interface */
     body {
@@ -68,11 +68,25 @@
     .button:hover {
       background-color: #45a049;
     }
+
+    .transaction-history {
+      margin-top: 20px;
+    }
+
+    .transaction-history-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .transaction {
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>MetaMask-like Interface</h1>
+    <h1>RSHC Wallet</h1>
     
     <div class="coin">
       <div class="coin-name">RSHC</div>
@@ -81,42 +95,115 @@
     
     <div class="wallet">
       <div class="wallet-address">Wallet-Adresse:</div>
-      <div id="address" class="secret-phrase"></div>
+      <input type="text" id="addressInput" class="secret-phrase" placeholder="Geben Sie die Wallet-Adresse ein" />
       <div class="secret-phrase">Geheimes Passwort:</div>
-      <div id="secret" class="secret-phrase"></div>
+      <input type="password" id="secretInput" class="secret-phrase" placeholder="Geben Sie das geheime Passwort ein" />
     </div>
 
     <div class="actions">
       <h2>Aktionen</h2>
+      <div>
+        <label for="amountInput">Betrag:</label>
+        <input type="number" id="amountInput" placeholder="Geben Sie den Betrag ein" />
+      </div>
       <button class="button" onclick="sendCoins()">Coins senden</button>
       <button class="button" onclick="receiveCoins()">Coins empfangen</button>
+    </div>
+
+    <div class="transaction-history">
+      <h2 class="transaction-history-title">Transaktionsverlauf</h2>
+      <div id="transactionHistory"></div>
     </div>
   </div>
 
   <script>
+    var transactions = [];
+
     // JavaScript-Code zur Generierung der Wallet-Adresse und des geheimen Passworts
     function generateWallet() {
       // Generiere eine zufällige Wallet-Adresse und ein geheimes Passwort
-      var address = generateRandomString(10);
+      var address = generateRandomAddress();
       var secret = generateRandomString(12);
 
       // Aktualisiere die Anzeige der Wallet-Adresse und des geheimen Passworts
-      document.getElementById('address').textContent = address;
-      document.getElementById('secret').textContent = secret;
+      document.getElementById('addressInput').value = address;
+      document.getElementById('secretInput').value = secret;
+    }
+
+    // Hilfsfunktion zur Generierung einer zufälligen Wallet-Adresse
+    function generateRandomAddress() {
+      var characters = '0123456789ABCDEF';
+      var address = '0x';
+      for (var i = 0; i < 30; i++) {
+        address += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return address;
     }
 
     // JavaScript-Code zum Senden von Coins
     function sendCoins() {
+      var address = document.getElementById('addressInput').value;
+      var amount = document.getElementById('amountInput').value;
+
+      if (address === '' || amount === '') {
+        alert('Bitte füllen Sie alle Felder aus!');
+        return;
+      }
+
       // Hier kannst du den Code zum Senden von Coins implementieren
       // Beispiel: Annahme, dass der Sendevorgang erfolgreich ist
-      alert('Coins wurden erfolgreich gesendet!');
+      var transaction = {
+        type: 'Send',
+        address: address,
+        amount: amount
+      };
+
+      transactions.push(transaction);
+      displayTransaction(transaction);
+
+      alert(amount + ' Coins wurden erfolgreich an ' + address + ' gesendet!');
     }
 
     // JavaScript-Code zum Empfangen von Coins
     function receiveCoins() {
+      var address = document.getElementById('addressInput').value;
+      var amount = document.getElementById('amountInput').value;
+
+      if (address === '' || amount === '') {
+        alert('Bitte füllen Sie alle Felder aus!');
+        return;
+      }
+
       // Hier kannst du den Code zum Empfangen von Coins implementieren
       // Beispiel: Annahme, dass der Empfangsvorgang erfolgreich ist
-      alert('Coins wurden erfolgreich empfangen!');
+      var transaction = {
+        type: 'Receive',
+        address: address,
+        amount: amount
+      };
+
+      transactions.push(transaction);
+      displayTransaction(transaction);
+
+      alert(amount + ' Coins wurden erfolgreich von ' + address + ' empfangen!');
+    }
+
+    // Funktion zur Anzeige einer Transaktion im Transaktionsverlauf
+    function displayTransaction(transaction) {
+      var transactionHistory = document.getElementById('transactionHistory');
+
+      var transactionElement = document.createElement('div');
+      transactionElement.classList.add('transaction');
+
+      var transactionType = document.createElement('span');
+      transactionType.innerHTML = transaction.type + ': ';
+      transactionElement.appendChild(transactionType);
+
+      var transactionDetails = document.createElement('span');
+      transactionDetails.innerHTML = transaction.amount + ' Coins ' + (transaction.type === 'Send' ? 'an' : 'von') + ' ' + transaction.address;
+      transactionElement.appendChild(transactionDetails);
+
+      transactionHistory.appendChild(transactionElement);
     }
 
     // Hilfsfunktion zur Generierung eines zufälligen Strings
