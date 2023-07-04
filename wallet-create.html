@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RSHC Wallet</title>
+  <title>MetaMask-like Interface</title>
   <style>
     /* CSS-Styling für das MetaMask-Interface */
     body {
@@ -86,18 +86,23 @@
 </head>
 <body>
   <div class="container">
-    <h1>RSHC Wallet</h1>
-    
+    <h1>MetaMask-like Interface</h1>
+
+    <div class="wallet-actions">
+      <button class="button" onclick="generateWallet()">Create Wallet</button>
+    </div>
+
     <div class="coin">
       <div class="coin-name">RSHC</div>
       <div class="coin-price">$1.31</div>
     </div>
-    
+
     <div class="wallet">
       <div class="wallet-address">Wallet-Adresse:</div>
       <input type="text" id="addressInput" class="secret-phrase" placeholder="Geben Sie die Wallet-Adresse ein" />
       <div class="secret-phrase">Geheimes Passwort:</div>
       <input type="password" id="secretInput" class="secret-phrase" placeholder="Geben Sie das geheime Passwort ein" />
+      <div class="balance" id="balance"></div>
     </div>
 
     <div class="actions">
@@ -111,13 +116,13 @@
     </div>
 
     <div class="transaction-history">
-      <h2 class="transaction-history-title">Transaktionsverlauf</h2>
+      <h2>Transaktionsverlauf</h2>
       <div id="transactionHistory"></div>
     </div>
   </div>
 
   <script>
-    var transactions = [];
+    var wallets = {};
 
     // JavaScript-Code zur Generierung der Wallet-Adresse und des geheimen Passworts
     function generateWallet() {
@@ -125,19 +130,13 @@
       var address = generateRandomAddress();
       var secret = generateRandomString(12);
 
-      // Aktualisiere die Anzeige der Wallet-Adresse und des geheimen Passworts
+      // Initialisiere den Kontostand mit 100 Coins
+      wallets[address] = 100;
+
+      // Aktualisiere die Anzeige der Wallet-Adresse, des geheimen Passworts und des Kontostands
       document.getElementById('addressInput').value = address;
       document.getElementById('secretInput').value = secret;
-    }
-
-    // Hilfsfunktion zur Generierung einer zufälligen Wallet-Adresse
-    function generateRandomAddress() {
-      var characters = '0123456789ABCDEF';
-      var address = '0x';
-      for (var i = 0; i < 30; i++) {
-        address += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-      return address;
+      document.getElementById('balance').innerText = wallets[address] + ' Coins';
     }
 
     // JavaScript-Code zum Senden von Coins
@@ -150,16 +149,29 @@
         return;
       }
 
+      if (wallets[address] < amount) {
+        alert('Nicht genügend Coins auf der Wallet!');
+        return;
+      }
+
+      // Verringere den Kontostand der sendenden Wallet
+      wallets[address] -= amount;
+
       // Hier kannst du den Code zum Senden von Coins implementieren
       // Beispiel: Annahme, dass der Sendevorgang erfolgreich ist
+
+      // Erhöhe den Kontostand der empfangenden Wallet
+      wallets[address] += parseInt(amount);
+
       var transaction = {
         type: 'Send',
-        address: address,
+        sender: address,
+        recipient: address,
         amount: amount
       };
 
-      transactions.push(transaction);
       displayTransaction(transaction);
+      updateBalance(address);
 
       alert(amount + ' Coins wurden erfolgreich an ' + address + ' gesendet!');
     }
@@ -174,16 +186,18 @@
         return;
       }
 
-      // Hier kannst du den Code zum Empfangen von Coins implementieren
-      // Beispiel: Annahme, dass der Empfangsvorgang erfolgreich ist
+      // Erhöhe den Kontostand der empfangenden Wallet
+      wallets[address] += parseInt(amount);
+
       var transaction = {
         type: 'Receive',
-        address: address,
+        sender: address,
+        recipient: address,
         amount: amount
       };
 
-      transactions.push(transaction);
       displayTransaction(transaction);
+      updateBalance(address);
 
       alert(amount + ' Coins wurden erfolgreich von ' + address + ' empfangen!');
     }
@@ -200,19 +214,38 @@
       transactionElement.appendChild(transactionType);
 
       var transactionDetails = document.createElement('span');
-      transactionDetails.innerHTML = transaction.amount + ' Coins ' + (transaction.type === 'Send' ? 'an' : 'von') + ' ' + transaction.address;
+      transactionDetails.innerHTML = transaction.amount + ' Coins von ' + transaction.sender + ' an ' + transaction.recipient;
       transactionElement.appendChild(transactionDetails);
 
       transactionHistory.appendChild(transactionElement);
     }
 
-    // Hilfsfunktion zur Generierung eines zufälligen Strings
+    // Funktion zum Aktualisieren des Kontostands
+    function updateBalance(address) {
+      document.getElementById('balance').innerText = wallets[address] + ' Coins';
+    }
+
+    // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
+    function generateRandomAddress() {
+      var address = '0x';
+      var characters = '0123456789ABCDEF';
+
+      for (var i = 0; i < 30; i++) {
+        address += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+
+      return address;
+    }
+
+    // JavaScript-Code zur Generierung einer zufälligen Zeichenkette
     function generateRandomString(length) {
-      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       var result = '';
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
       for (var i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * characters.length));
       }
+
       return result;
     }
 
