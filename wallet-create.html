@@ -99,9 +99,9 @@
 
     <div class="wallet">
       <div class="wallet-address">Wallet-Adresse:</div>
-      <input type="text" id="addressInput" class="secret-phrase" placeholder="Geben Sie die Wallet-Adresse ein" />
+      <textarea id="addressInput" class="secret-phrase" placeholder="Geben Sie die Wallet-Adresse ein" rows="2" readonly></textarea>
       <div class="secret-phrase">Privater Schlüssel:</div>
-      <input type="text" id="privateKeyInput" class="secret-phrase" placeholder="Privater Schlüssel wird generiert" readonly />
+      <textarea id="privateKeyInput" class="secret-phrase" placeholder="Privater Schlüssel wird generiert" rows="2" readonly></textarea>
       <div class="balance" id="balance"></div>
     </div>
 
@@ -109,7 +109,7 @@
       <h2>Aktionen</h2>
       <div>
         <label for="recipientInput">Empfänger-Adresse:</label>
-        <input type="text" id="recipientInput" placeholder="Geben Sie die Empfänger-Wallet-Adresse ein" />
+        <textarea id="recipientInput" placeholder="Geben Sie die Empfänger-Wallet-Adresse ein" rows="2"></textarea>
       </div>
       <div>
         <label for="amountInput">Betrag:</label>
@@ -208,10 +208,10 @@
 
     // JavaScript-Code zum Empfangen von Coins
     function receiveCoins() {
-      var address = generateRandomAddress();
-      var amount = document.getElementById('amountInput').value;
+      var address = document.getElementById('addressInput').value;
+      var amount = prompt('Geben Sie den zu empfangenden Betrag ein');
 
-      if (amount === '') {
+      if (amount === null || amount === '') {
         alert('Bitte geben Sie den zu empfangenden Betrag ein!');
         return;
       }
@@ -258,7 +258,7 @@
     // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
     function generateRandomAddress() {
       var address = '0x';
-      var characters = '0123456789ABCDEF';
+      var characters = '0123456789ABCDEFabcdef';
 
       for (var i = 0; i < 30; i++) {
         address += characters.charAt(Math.floor(Math.random() * characters.length));
