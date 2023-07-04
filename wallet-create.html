@@ -134,6 +134,10 @@
 
     .send-window h2 {
       margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
     }
 
     .send-window input[type="text"] {
@@ -171,7 +175,6 @@
       font-weight: bold;
       color: #333333;
     }
-
   </style>
   <script>
     var wallets = {};
@@ -203,8 +206,9 @@
       // Initialisiere den Kontostand mit 100 Coins
       wallets[address] = 100;
 
-      // Aktualisiere die Anzeige der Wallet-Adresse und des Kontostands
+      // Aktualisiere die Anzeige der Wallet-Adresse, der geheimen Phrase und des Kontostands
       document.getElementById('addressInput').value = address;
+      document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ***************';
       document.getElementById('balance').innerText = wallets[address] + ' Coins';
 
       hasCreatedWallet = true;
@@ -238,10 +242,9 @@
         return;
       }
 
-      // Führe die Transaktion aus
+      // Führe die Transaktion durch
       wallets[senderAddress] -= coinQuantity;
-      wallets[receiverAddress] = wallets[receiverAddress] || 0;
-      wallets[receiverAddress] += coinQuantity;
+      wallets[receiverAddress] = wallets[receiverAddress] ? wallets[receiverAddress] + coinQuantity : coinQuantity;
 
       // Aktualisiere die Anzeige des Kontostands
       document.getElementById('balance').innerText = wallets[senderAddress] + ' Coins';
@@ -249,6 +252,12 @@
       // Zeige die Bestätigungsnachricht an
       document.getElementById('confirmationText').innerText = 'Die Transaktion wurde erfolgreich durchgeführt. Sie haben ' + coinQuantity + ' Coins an ' + receiverAddress + ' gesendet.';
       document.getElementById('confirmation').style.display = 'block';
+    }
+
+    // JavaScript-Code zur Anzeige der generierten Wallet-Adresse
+    function displayWalletAddress() {
+      var address = document.getElementById('addressInput').value;
+      alert('Ihre generierte Wallet-Adresse lautet:\n' + address);
     }
   </script>
 </head>
@@ -264,7 +273,7 @@
     <div class="wallet">
       <div class="wallet-address">Wallet-Adresse:</div>
       <textarea id="addressInput" rows="2" readonly></textarea>
-      <div class="secret-phrase">Geheime Phrase: ***************</div>
+      <div class="secret-phrase">Geheime Phrase: <span id="secretPhrase">***************</span></div>
       <div class="balance">Kontostand: <span id="balance">100 Coins</span></div>
     </div>
 
@@ -296,13 +305,5 @@
       <p id="confirmationText"></p>
     </div>
   </div>
-
-  <script>
-    // JavaScript-Code zur Anzeige der generierten Wallet-Adresse
-    function displayWalletAddress() {
-      var address = document.getElementById('addressInput').value;
-      alert('Ihre generierte Wallet-Adresse lautet:\n' + address);
-    }
-  </script>
 </body>
 </html>
