@@ -114,6 +114,43 @@
       margin-bottom: 5px;
     }
   </style>
+  <script>
+    var wallets = {};
+    var hasCreatedWallet = false;
+
+    // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
+    function generateRandomAddress() {
+      var address = '0x';
+      var characters = '0123456789ABCDEFabcdef';
+
+      for (var i = 0; i < 32; i++) {
+        address += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+
+      return address;
+    }
+
+    // JavaScript-Code zum Generieren einer Wallet
+    function generateWallet() {
+      // Überprüfe, ob bereits eine Wallet erstellt wurde
+      if (hasCreatedWallet) {
+        alert('Es wurde bereits eine Wallet erstellt!');
+        return;
+      }
+
+      // Generiere eine zufällige Wallet-Adresse
+      var address = generateRandomAddress();
+
+      // Initialisiere den Kontostand mit 100 Coins
+      wallets[address] = 100;
+
+      // Aktualisiere die Anzeige der Wallet-Adresse und des Kontostands
+      document.getElementById('addressInput').value = address;
+      document.getElementById('balance').innerText = wallets[address] + ' Coins';
+
+      hasCreatedWallet = true;
+    }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -126,9 +163,8 @@
 
     <div class="wallet">
       <div class="wallet-address">Wallet-Adresse:</div>
-      <textarea id="addressInput" class="secret-phrase" placeholder="Geben Sie die Wallet-Adresse ein" rows="2" readonly></textarea>
-      <div class="secret-phrase">Privater Schlüssel:</div>
-      <textarea id="privateKeyInput" class="secret-phrase" placeholder="Privater Schlüssel wird generiert..." rows="2" readonly></textarea>
+      <textarea id="addressInput" rows="2" readonly></textarea>
+      <div class="secret-phrase">Geheime Phrase: ***************</div>
       <div class="balance">Kontostand: <span id="balance">100 Coins</span></div>
     </div>
 
@@ -150,68 +186,10 @@
   </div>
 
   <script>
-    var wallets = {};
-    var hasCreatedWallet = false;
-
-    // JavaScript-Code zur Generierung der Wallet-Adresse und des privaten Schlüssels
-    function generateWallet() {
-      // Überprüfe, ob bereits eine Wallet erstellt wurde
-      if (hasCreatedWallet) {
-        alert('Es wurde bereits eine Wallet erstellt!');
-        return;
-      }
-
-      // Überprüfe die IP-Adresse
-      var ipAddress = getIPAddress();
-
-      if (ipAddress in wallets) {
-        alert('Es wurde bereits eine Wallet mit dieser IP-Adresse erstellt!');
-        return;
-      }
-
-      // Generiere eine zufällige Wallet-Adresse und einen privaten Schlüssel
-      var address = generateRandomAddress();
-      var privateKey = generateRandomString(64);
-
-      // Initialisiere den Kontostand mit 100 Coins
-      wallets[address] = 100;
-
-      // Aktualisiere die Anzeige der Wallet-Adresse, des privaten Schlüssels und des Kontostands
-      document.getElementById('addressInput').value = address;
-      document.getElementById('privateKeyInput').value = privateKey;
-      document.getElementById('balance').innerText = wallets[address] + ' Coins';
-
-      hasCreatedWallet = true;
-    }
-
     // JavaScript-Code zur Anzeige der generierten Wallet-Adresse
     function displayWalletAddress() {
       var address = document.getElementById('addressInput').value;
       alert('Ihre generierte Wallet-Adresse lautet:\n' + address);
-    }
-
-    // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
-    function generateRandomAddress() {
-      var address = '0x';
-      var characters = '0123456789ABCDEFabcdef';
-
-      for (var i = 0; i < 32; i++) {
-        address += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-
-      return address;
-    }
-
-    // JavaScript-Code zur Generierung einer zufälligen Zeichenkette
-    function generateRandomString(length) {
-      var result = '';
-      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-      for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-
-      return result;
     }
   </script>
 </body>
