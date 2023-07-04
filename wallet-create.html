@@ -1,163 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wallet erstellen</title>
+  <title>MetaMask-like Interface</title>
   <style>
+    /* CSS-Styling für das MetaMask-Interface */
     body {
-      background-color: #35068c;
       font-family: Arial, sans-serif;
-      color: #ffffff;
-      text-align: center;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
     }
 
     .container {
-      max-width: 500px;
+      width: 400px;
       margin: 0 auto;
       padding: 20px;
       background-color: #ffffff;
+      border: 1px solid #dddddd;
       border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
       text-align: center;
     }
 
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: #000000;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .create-button,
-    .send-button {
-      background-color: #35068c;
-      color: #ffffff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .balance {
-      font-weight: bold;
+    .coin {
       margin-top: 20px;
+    }
+
+    .coin-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333333;
+    }
+
+    .coin-price {
+      font-size: 18px;
+      color: #666666;
+    }
+
+    .wallet {
+      margin-top: 20px;
+    }
+
+    .wallet-address {
+      font-size: 16px;
+      color: #333333;
+      margin-bottom: 5px;
+    }
+
+    .secret-phrase {
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Wallet erstellen</h1>
-    <form>
-      <div class="form-group">
-        <label for="walletAddress">Wallet Adresse:</label>
-        <input type="text" id="walletAddress" placeholder="Wallet Adresse" readonly>
-      </div>
-      <div class="form-group">
-        <label for="privateKey">Privater Schlüssel:</label>
-        <input type="text" id="privateKey" placeholder="Privater Schlüssel" readonly>
-      </div>
-      <button class="create-button" onclick="createWallet()">Wallet erstellen</button>
-    </form>
+    <h1>MetaMask-like Interface</h1>
+    
+    <div class="coin">
+      <div class="coin-name">RSHC</div>
+      <div class="coin-price">$1.31</div>
+    </div>
+    
+    <div class="wallet">
+      <div class="wallet-address">Wallet-Adresse:</div>
+      <div id="address" class="secret-phrase"></div>
+      <div class="secret-phrase">Geheimes Passwort:</div>
+      <div id="secret" class="secret-phrase"></div>
+    </div>
 
-    <h1>Coins senden</h1>
-    <form>
-      <div class="form-group">
-        <label for="receiverAddress">Empfänger Adresse:</label>
-        <input type="text" id="receiverAddress" placeholder="Empfänger Adresse">
-      </div>
-      <div class="form-group">
-        <label for="amount">Betrag:</label>
-        <input type="number" id="amount" placeholder="Betrag">
-      </div>
-      <button class="send-button" onclick="sendCoins()">Coins senden</button>
-    </form>
-
-    <div class="balance" id="balance">Guthaben: $0 (0 RSHC)</div>
+    <div class="actions">
+      <h2>Aktionen</h2>
+      <button class="button" onclick="sendCoins()">Coins senden</button>
+      <button class="button" onclick="receiveCoins()">Coins empfangen</button>
+    </div>
   </div>
 
   <script>
-    var wallet = null;
-    var balance = 0;
-    var coinPrice = 1.31;
-
-    function createWallet() {
-      // Erzeuge ein neues Wallet
-      wallet = generateWallet();
-
-      // Setze die generierten Werte in die entsprechenden Eingabefelder
-      document.getElementById('walletAddress').value = wallet.address;
-      document.getElementById('privateKey').value = wallet.privateKey;
-
-      // Setze den Guthabenwert
-      balance = 1000;
-      updateBalance();
-    }
-
+    // JavaScript-Code zur Generierung der Wallet-Adresse und des geheimen Passworts
     function generateWallet() {
-      // Hier kannst du den Code für das Erstellen der Wallet implementieren
-      // Beispiel: Generierung der Adresse und des privaten Schlüssels
+      // Generiere eine zufällige Wallet-Adresse und ein geheimes Passwort
+      var address = generateRandomString(10);
+      var secret = generateRandomString(12);
 
-      // Generiere eine zufällige Adresse
-      var walletAddress = generateRandomAddress();
-      // Generiere einen zufälligen privaten Schlüssel
-      var privateKey = generateRandomPrivateKey();
-
-      // Rückgabe der generierten Werte als Objekt
-      return {
-        address: walletAddress,
-        privateKey: privateKey
-      };
+      // Aktualisiere die Anzeige der Wallet-Adresse und des geheimen Passworts
+      document.getElementById('address').textContent = address;
+      document.getElementById('secret').textContent = secret;
     }
 
-    function generateRandomAddress() {
-      // Hier kannst du den Code für die Generierung einer zufälligen Adresse implementieren
-      // Beispiel: Zufällige Zeichenkette
-      return '0x' + Math.random().toString(36).substr(2, 10);
-    }
-
-    function generateRandomPrivateKey() {
-      // Hier kannst du den Code für die Generierung eines zufälligen privaten Schlüssels implementieren
-      // Beispiel: Zufällige Zeichenkette
-      return '0x' + Math.random().toString(36).substr(2, 16);
-    }
-
+    // JavaScript-Code zum Senden von Coins
     function sendCoins() {
-      var receiverAddress = document.getElementById('receiverAddress').value;
-      var amount = parseInt(document.getElementById('amount').value);
+      // Hier kannst du den Code zum Senden von Coins implementieren
+      // Beispiel: Annahme, dass der Sendevorgang erfolgreich ist
+      alert('Coins wurden erfolgreich gesendet!');
+    }
 
-      if (balance >= amount) {
-        balance -= amount;
-        updateBalance();
+    // JavaScript-Code zum Empfangen von Coins
+    function receiveCoins() {
+      // Hier kannst du den Code zum Empfangen von Coins implementieren
+      // Beispiel: Annahme, dass der Empfangsvorgang erfolgreich ist
+      alert('Coins wurden erfolgreich empfangen!');
+    }
 
-        alert('Coins erfolgreich gesendet an ' + receiverAddress);
-      } else {
-        alert('Nicht genügend Guthaben!');
+    // Hilfsfunktion zur Generierung eines zufälligen Strings
+    function generateRandomString(length) {
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var result = '';
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
       }
+      return result;
     }
 
-    function updateBalance() {
-      var balanceElement = document.getElementById('balance');
-      var coinAmount = balance / coinPrice;
-      balanceElement.textContent = 'Guthaben: $' + balance.toFixed(2) + ' (' + coinAmount.toFixed(2) + ' RSHC)';
-    }
+    // Generiere die Wallet-Adresse und das geheime Passwort beim Laden der Seite
+    window.onload = generateWallet;
   </script>
 </body>
 </html>
