@@ -127,9 +127,24 @@
 
   <script>
     var wallets = {};
+    var hasCreatedWallet = false;
 
     // JavaScript-Code zur Generierung der Wallet-Adresse und des privaten Schlüssels
     function generateWallet() {
+      // Überprüfe, ob bereits eine Wallet erstellt wurde
+      if (hasCreatedWallet) {
+        alert('Es wurde bereits eine Wallet erstellt!');
+        return;
+      }
+
+      // Überprüfe die IP-Adresse
+      var ipAddress = getIPAddress();
+
+      if (ipAddress in wallets) {
+        alert('Es wurde bereits eine Wallet mit dieser IP-Adresse erstellt!');
+        return;
+      }
+
       // Generiere eine zufällige Wallet-Adresse und einen privaten Schlüssel
       var address = generateRandomAddress();
       var privateKey = generateRandomString(64);
@@ -141,6 +156,16 @@
       document.getElementById('addressInput').value = address;
       document.getElementById('privateKeyInput').value = privateKey;
       document.getElementById('balance').innerText = wallets[address] + ' Coins';
+
+      hasCreatedWallet = true;
+    }
+
+    // Funktion zur Abrufung der IP-Adresse des Clients
+    function getIPAddress() {
+      // Hier kannst du den Code einfügen, um die IP-Adresse des Clients zu erhalten
+      // Dies kann serverseitig oder mit einer externen API erfolgen
+      // Da dies ein Frontend-Beispiel ist, wird statisch '0.0.0.0' als IP-Adresse zurückgegeben
+      return '0.0.0.0';
     }
 
     // JavaScript-Code zum Senden von Coins
@@ -187,7 +212,7 @@
       var amount = document.getElementById('amountInput').value;
 
       if (amount === '') {
-        alert('Bitte geben Sie den Betrag ein!');
+        alert('Bitte geben Sie den zu empfangenden Betrag ein!');
         return;
       }
 
@@ -196,7 +221,7 @@
 
       var transaction = {
         type: 'Receive',
-        sender: 'N/A',
+        sender: '',
         recipient: address,
         amount: amount
       };
@@ -207,7 +232,7 @@
       alert(amount + ' Coins wurden erfolgreich empfangen! Wallet-Adresse: ' + address);
     }
 
-    // Funktion zur Anzeige einer Transaktion im Transaktionsverlauf
+    // Funktion zum Anzeigen einer Transaktion im Transaktionsverlauf
     function displayTransaction(transaction) {
       var transactionHistory = document.getElementById('transactionHistory');
 
