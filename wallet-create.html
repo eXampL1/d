@@ -27,6 +27,7 @@
 
     .coin {
       margin-top: 20px;
+      text-align: center;
     }
 
     .coin-name {
@@ -42,6 +43,7 @@
 
     .wallet {
       margin-top: 20px;
+      text-align: center;
     }
 
     .wallet-address {
@@ -113,6 +115,63 @@
     .transaction {
       margin-bottom: 5px;
     }
+
+    /* Modernes Design für das Senden-Fenster */
+    .send-window {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+    }
+
+    .send-window h2 {
+      margin-top: 0;
+    }
+
+    .send-window input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    .send-window button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #8e44ad;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .send-window button:hover {
+      background-color: #7d3c98;
+    }
+
+    .confirmation {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f2f2f2;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+    }
+
+    .confirmation p {
+      margin: 0;
+      font-weight: bold;
+      color: #333333;
+    }
+
   </style>
   <script>
     var wallets = {};
@@ -150,6 +209,47 @@
 
       hasCreatedWallet = true;
     }
+
+    // JavaScript-Code zum Anzeigen des Senden-Fensters
+    function openSendWindow() {
+      document.getElementById('sendWindow').style.display = 'block';
+    }
+
+    // JavaScript-Code zum Schließen des Senden-Fensters
+    function closeSendWindow() {
+      document.getElementById('sendWindow').style.display = 'none';
+    }
+
+    // JavaScript-Code zum Senden von Coins
+    function sendCoins() {
+      var senderAddress = document.getElementById('addressInput').value;
+      var receiverAddress = document.getElementById('receiverAddressInput').value;
+      var coinQuantity = parseInt(document.getElementById('coinQuantityInput').value);
+
+      // Überprüfe, ob der Sender genügend Coins hat
+      if (coinQuantity > wallets[senderAddress]) {
+        alert('Sie haben nicht genügend Coins auf Ihrem Konto!');
+        return;
+      }
+
+      // Überprüfe, ob die Empfängeradresse gültig ist
+      if (receiverAddress.length != 42 || !receiverAddress.startsWith('0x')) {
+        alert('Ungültige Empfängeradresse!');
+        return;
+      }
+
+      // Führe die Transaktion aus
+      wallets[senderAddress] -= coinQuantity;
+      wallets[receiverAddress] = wallets[receiverAddress] || 0;
+      wallets[receiverAddress] += coinQuantity;
+
+      // Aktualisiere die Anzeige des Kontostands
+      document.getElementById('balance').innerText = wallets[senderAddress] + ' Coins';
+
+      // Zeige die Bestätigungsnachricht an
+      document.getElementById('confirmationText').innerText = 'Die Transaktion wurde erfolgreich durchgeführt. Sie haben ' + coinQuantity + ' Coins an ' + receiverAddress + ' gesendet.';
+      document.getElementById('confirmation').style.display = 'block';
+    }
   </script>
 </head>
 <body>
@@ -182,6 +282,18 @@
     <div class="transaction-history">
       <div class="transaction-history-title">Transaktionsverlauf</div>
       <div id="transactionHistory"></div>
+    </div>
+
+    <div id="sendWindow" class="send-window">
+      <h2>Coins senden</h2>
+      <input type="text" id="receiverAddressInput" placeholder="Empfängeradresse">
+      <input type="text" id="coinQuantityInput" placeholder="Coin-Menge">
+      <button onclick="sendCoins()">Transaktion senden</button>
+      <button onclick="closeSendWindow()">Abbrechen</button>
+    </div>
+
+    <div id="confirmation" class="confirmation">
+      <p id="confirmationText"></p>
     </div>
   </div>
 
