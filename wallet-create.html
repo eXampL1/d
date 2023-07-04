@@ -100,16 +100,20 @@
     <div class="wallet">
       <div class="wallet-address">Wallet-Adresse:</div>
       <input type="text" id="addressInput" class="secret-phrase" placeholder="Geben Sie die Wallet-Adresse ein" />
-      <div class="secret-phrase">Geheimes Passwort:</div>
-      <input type="password" id="secretInput" class="secret-phrase" placeholder="Geben Sie das geheime Passwort ein" />
+      <div class="secret-phrase">Privater Schlüssel:</div>
+      <input type="text" id="privateKeyInput" class="secret-phrase" placeholder="Privater Schlüssel wird generiert" readonly />
       <div class="balance" id="balance"></div>
     </div>
 
     <div class="actions">
       <h2>Aktionen</h2>
       <div>
+        <label for="recipientInput">Empfänger-Adresse:</label>
+        <input type="text" id="recipientInput" placeholder="Geben Sie die Empfänger-Wallet-Adresse ein" />
+      </div>
+      <div>
         <label for="amountInput">Betrag:</label>
-        <input type="number" id="amountInput" placeholder="Geben Sie den Betrag ein" />
+        <input type="number" id="amountInput" placeholder="Geben Sie den zu sendenden Betrag ein" />
       </div>
       <button class="button" onclick="sendCoins()">Coins senden</button>
       <button class="button" onclick="receiveCoins()">Coins empfangen</button>
@@ -124,27 +128,28 @@
   <script>
     var wallets = {};
 
-    // JavaScript-Code zur Generierung der Wallet-Adresse und des geheimen Passworts
+    // JavaScript-Code zur Generierung der Wallet-Adresse und des privaten Schlüssels
     function generateWallet() {
-      // Generiere eine zufällige Wallet-Adresse und ein geheimes Passwort
+      // Generiere eine zufällige Wallet-Adresse und einen privaten Schlüssel
       var address = generateRandomAddress();
-      var secret = generateRandomString(12);
+      var privateKey = generateRandomString(64);
 
       // Initialisiere den Kontostand mit 100 Coins
       wallets[address] = 100;
 
-      // Aktualisiere die Anzeige der Wallet-Adresse, des geheimen Passworts und des Kontostands
+      // Aktualisiere die Anzeige der Wallet-Adresse, des privaten Schlüssels und des Kontostands
       document.getElementById('addressInput').value = address;
-      document.getElementById('secretInput').value = secret;
+      document.getElementById('privateKeyInput').value = privateKey;
       document.getElementById('balance').innerText = wallets[address] + ' Coins';
     }
 
     // JavaScript-Code zum Senden von Coins
     function sendCoins() {
       var address = document.getElementById('addressInput').value;
+      var recipient = document.getElementById('recipientInput').value;
       var amount = document.getElementById('amountInput').value;
 
-      if (address === '' || amount === '') {
+      if (address === '' || recipient === '' || amount === '') {
         alert('Bitte füllen Sie alle Felder aus!');
         return;
       }
@@ -161,19 +166,19 @@
       // Beispiel: Annahme, dass der Sendevorgang erfolgreich ist
 
       // Erhöhe den Kontostand der empfangenden Wallet
-      wallets[address] += parseInt(amount);
+      wallets[recipient] += parseInt(amount);
 
       var transaction = {
         type: 'Send',
         sender: address,
-        recipient: address,
+        recipient: recipient,
         amount: amount
       };
 
       displayTransaction(transaction);
       updateBalance(address);
 
-      alert(amount + ' Coins wurden erfolgreich an ' + address + ' gesendet!');
+      alert(amount + ' Coins wurden erfolgreich an ' + recipient + ' gesendet!');
     }
 
     // JavaScript-Code zum Empfangen von Coins
@@ -249,7 +254,7 @@
       return result;
     }
 
-    // Generiere die Wallet-Adresse und das geheime Passwort beim Laden der Seite
+    // Generiere die Wallet-Adresse und den privaten Schlüssel beim Laden der Seite
     window.onload = generateWallet;
   </script>
 </body>
