@@ -90,12 +90,13 @@
       <button class="send-button" onclick="sendCoins()">Coins senden</button>
     </form>
 
-    <div class="balance" id="balance">Guthaben: $0</div>
+    <div class="balance" id="balance">Guthaben: $0 (0 RSHC)</div>
   </div>
 
   <script>
     var wallet = null;
     var balance = 0;
+    var coinPrice = 1.31;
 
     function createWallet() {
       // Erzeuge ein neues Wallet
@@ -154,7 +155,8 @@
 
     function updateBalance() {
       var balanceElement = document.getElementById('balance');
-      balanceElement.textContent = 'Guthaben: $' + balance.toFixed(2);
+      var coinAmount = balance / coinPrice;
+      balanceElement.textContent = 'Guthaben: $' + balance.toFixed(2) + ' (' + coinAmount.toFixed(2) + ' RSHC)';
     }
   </script>
 </body>
