@@ -82,11 +82,19 @@
     }
 
     .receive-button {
-      background-color: #9b59b6;
+      background-color: #8e44ad;
     }
 
     .receive-button:hover {
+      background-color: #7d3c98;
+    }
+
+    .send-button {
       background-color: #8e44ad;
+    }
+
+    .send-button:hover {
+      background-color: #7d3c98;
     }
 
     .action-buttons {
@@ -129,7 +137,6 @@
       border: 1px solid #dddddd;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 9999;
     }
 
     .send-window h2 {
@@ -238,7 +245,7 @@
 
       // Überprüfe, ob die Empfängeradresse gültig ist
       if (receiverAddress.length != 42 || !receiverAddress.startsWith('0x')) {
-        alert('Ungültige Empfängeradresse!');
+        alert('Die Empfängeradresse ist ungültig!');
         return;
       }
 
@@ -281,6 +288,10 @@
       <div>
         <button class="button" onclick="generateWallet()">Erstellen</button>
         <div class="action-button-label">Erstelle Wallet</div>
+      </div>
+      <div>
+        <button class="button send-button" onclick="openSendWindow()">↖</button>
+        <div class="action-button-label">Senden</div>
       </div>
       <div>
         <button class="button receive-button" onclick="displayWalletAddress()">+</button>
