@@ -186,6 +186,7 @@
   <script>
     var wallets = {};
     var hasCreatedWallet = false;
+    var coinPrice = 1.31;
 
     // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
     function generateRandomAddress() {
@@ -244,8 +245,8 @@
       }
 
       // Überprüfe, ob die Empfängeradresse gültig ist
-      if (receiverAddress.length != 42 || !receiverAddress.startsWith('0x')) {
-        alert('Die Empfängeradresse ist ungültig!');
+      if (receiverAddress.length != 42|| !receiverAddress.startsWith('0x')) {
+        alert('Ungültige Empfängeradresse!');
         return;
       }
 
@@ -266,6 +267,46 @@
       var address = document.getElementById('addressInput').value;
       alert('Ihre generierte Wallet-Adresse lautet:\n' + address);
     }
+
+    // JavaScript-Code zum Überprüfen und Aktualisieren des Coin-Preises
+    function checkCoinPrice() {
+      var coinValue = document.getElementById('coinValue');
+      var coinPriceDisplay = document.getElementById('coinPriceDisplay');
+
+      if (coinValue.value == 100) {
+        coinPriceDisplay.innerText = '$' + (coinPrice * 100).toFixed(2);
+      } else {
+        coinPriceDisplay.innerText = '$' + (coinPrice * coinValue.value).toFixed(2);
+      }
+    }
+
+    // JavaScript-Code zum Anmelden
+    function login() {
+      var email = document.getElementById('emailInput').value;
+      var password = document.getElementById('passwordInput').value;
+
+      // Senden Sie eine Anfrage an die API, um den Benutzer anzumelden
+      fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email, password: password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Anmeldung erfolgreich');
+          // Führen Sie hier weitere Aktionen nach der Anmeldung aus, z. B. Weiterleitung zu einer anderen Seite
+        } else {
+          alert('Anmeldung fehlgeschlagen');
+        }
+      })
+      .catch(error => {
+        console.error('Fehler beim Anmelden:', error);
+        alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+      });
+    }
   </script>
 </head>
 <body>
@@ -274,7 +315,11 @@
 
     <div class="coin">
       <div class="coin-name">RSHC</div>
-      <div class="coin-price">$1.31</div>
+      <div class="coin-price">
+        <input type="number" id="coinValue" min="1" max="9999" step="1" oninput="checkCoinPrice()">
+        $
+        <span id="coinPriceDisplay">1.31</span>
+      </div>
     </div>
 
     <div class="wallet">
@@ -314,6 +359,13 @@
 
     <div id="confirmation" class="confirmation">
       <p id="confirmationText"></p>
+    </div>
+
+    <div class="login-section">
+      <h2>Anmelden</h2>
+      <input type="email" id="emailInput" placeholder="E-Mail">
+      <input type="password" id="passwordInput" placeholder="Passwort">
+      <button onclick="login()">Anmelden</button>
     </div>
   </div>
 </body>
