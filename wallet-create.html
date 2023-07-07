@@ -182,6 +182,41 @@
       font-weight: bold;
       color: #333333;
     }
+
+    .login-section {
+      margin-top: 20px;
+    }
+
+    .login-section h2 {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .login-section input[type="email"],
+    .login-section input[type="password"],
+    .login-section input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+    }
+
+    .login-section button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #8e44ad;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .login-section button:hover {
+      background-color: #7d3c98;
+    }
   </style>
   <script>
     var wallets = {};
@@ -211,15 +246,43 @@
       // Generiere eine zufällige Wallet-Adresse
       var address = generateRandomAddress();
 
+      // Generiere eine geheime Phrase mit 12 Wörtern
+      var secretPhrase = generateSecretPhrase();
+
       // Initialisiere den Kontostand mit 100 Coins
       wallets[address] = 100;
 
       // Aktualisiere die Anzeige der Wallet-Adresse, der geheimen Phrase und des Kontostands
       document.getElementById('addressInput').value = address;
-      document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ***************';
-      document.getElementById('balance').innerText = wallets[address] + ' Coins';
-
+      document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase+ ' Coins';
       hasCreatedWallet = true;
+    }
+
+    // JavaScript-Code zur Generierung einer geheimen Phrase mit 12 Wörtern
+    function generateSecretPhrase() {
+      var words = [
+        'word1',
+        'word2',
+        'word3',
+        'word4',
+        'word5',
+        'word6',
+        'word7',
+        'word8',
+        'word9',
+        'word10',
+        'word11',
+        'word12'
+      ];
+
+      var secretPhrase = '';
+
+      for (var i = 0; i < 12; i++) {
+        var randomIndex = Math.floor(Math.random() * words.length);
+        secretPhrase += words[randomIndex] + ' ';
+      }
+
+      return secretPhrase.trim();
     }
 
     // JavaScript-Code zum Anzeigen des Senden-Fensters
@@ -315,6 +378,13 @@
 
     <div id="confirmation" class="confirmation">
       <p id="confirmationText"></p>
+    </div>
+
+    <div class="login-section">
+      <h2>Anmelden</h2>
+      <input type="email" id="emailInput" placeholder="E-Mail">
+      <input type="password" id="passwordInput" placeholder="Passwort">
+      <button onclick="login()">Anmelden</button>
     </div>
   </div>
 </body>
