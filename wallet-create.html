@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RSHC Wallet</title>
+  <title>MetaMask-like Interface</title>
   <style>
     /* CSS-Styling für das MetaMask-Interface */
     body {
@@ -256,10 +256,10 @@
       document.getElementById('addressInput').value = address;
       document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase;
       updateBalance(address);
-      hasCreatedWallet = true;
+      hasCreatedWallettrue;
     }
 
-    // JavaScript-Code zur Aktualisierungder Anzeige des Kontostands basierend auf der Anzahl der Coins
+    // JavaScript-Code zur Aktualisierung der Anzeige des Kontostands basierend auf der Anzahl der Coins
     function updateBalance(address) {
       var balance = wallets[address];
       var totalValue = balance * coinPrice;
@@ -314,7 +314,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>RSHC Wallet</h1>
+    <h1>MetaMask-like Interface</h1>
 
     <div class="coin">
       <div class="coin-name">RSHC</div>
