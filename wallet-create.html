@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> RSHC Wallet Interface</title>
+  <title>RSHC Wallet</title>
   <style>
     /* CSS-Styling für das MetaMask-Interface */
     body {
@@ -255,35 +255,15 @@
       // Aktualisiere die Anzeige der Wallet-Adresse, der geheimen Phrase und des Kontostands
       document.getElementById('addressInput').value = address;
       document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase;
-      document.getElementById('balance').innerText = wallets[address] + 'Coins';
+      updateBalance(address);
       hasCreatedWallet = true;
     }
 
-    // JavaScript-Code zur Generierung einer geheimen Phrase mit 12 zufälligen Wörtern
-    function generateSecretPhrase() {
-      var words = [
-        'Auto',
-        'Buch',
-        'Haus',
-        'Katze',
-        'Kaffee',
-        'Schlüssel',
-        'Mond',
-        'Sonne',
-        'Himmel',
-        'Blume',
-        'Baum',
-        'Wasser'
-      ];
-
-      var secretPhrase = '';
-
-      for (var i = 0; i < 12; i++) {
-        var randomIndex = Math.floor(Math.random() * words.length);
-        secretPhrase += words[randomIndex] + ' ';
-      }
-
-      return secretPhrase.trim();
+    // JavaScript-Code zur Aktualisierungder Anzeige des Kontostands basierend auf der Anzahl der Coins
+    function updateBalance(address) {
+      var balance = wallets[address];
+      var totalValue = balance * coinPrice;
+      document.getElementById('balance').innerText = balance + ' Coins (' + totalValue.toFixed(2) + '$)';
     }
 
     // JavaScript-Code zum Anzeigen des Senden-Fensters
@@ -318,7 +298,7 @@
       wallets[receiverAddress] = wallets[receiverAddress] ? wallets[receiverAddress] + 100 : 100;
 
       // Aktualisiere die Anzeige des Kontostands
-      document.getElementById('balance').innerText = wallets[senderAddress] + ' Coins';
+      updateBalance(senderAddress);
 
       // Zeige die Bestätigungsnachricht an
       document.getElementById('confirmationText').innerText = 'Die Transaktion wurde erfolgreich durchgeführt. Sie haben 100 Coins an ' + receiverAddress + ' gesendet.';
@@ -347,7 +327,7 @@
       <div class="wallet-address">Wallet-Adresse:</div>
       <textarea id="addressInput" rows="2" readonly></textarea>
       <div class="secret-phrase">Geheime Phrase: <span id="secretPhrase">***************</span></div>
-      <div class="balance">Kontostand: <span id="balance">100 Coins</span></div>
+      <div class="balance">Kontostand: <span id="balance">100 Coins (131.00$)</span></div>
     </div>
 
     <div class="action-buttons">
@@ -356,7 +336,7 @@
         <div class="action-button-label">Erstelle Wallet</div>
       </div>
       <div>
-        <button class="button send-button" onclick="openSendWindow()">💸</button>
+        <button class="button send-button" onclick="openSendWindow()">↖</button>
         <div class="action-button-label">Senden</div>
       </div>
       <div>
