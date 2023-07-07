@@ -246,7 +246,7 @@
       // Generiere eine zufällige Wallet-Adresse
       var address = generateRandomAddress();
 
-      // Generiere eine geheime Phrase mit 12 Wörtern
+      // Generiere eine geheime Phrase mit 12 zufälligen Wörtern
       var secretPhrase = generateSecretPhrase();
 
       // Initialisiere den Kontostand mit 100 Coins
@@ -254,25 +254,26 @@
 
       // Aktualisiere die Anzeige der Wallet-Adresse, der geheimen Phrase und des Kontostands
       document.getElementById('addressInput').value = address;
-      document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase+ ' Coins';
+      document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase;
+      document.getElementById('balance').innerText = wallets[address] + 'Coins';
       hasCreatedWallet = true;
     }
 
-    // JavaScript-Code zur Generierung einer geheimen Phrase mit 12 Wörtern
+    // JavaScript-Code zur Generierung einer geheimen Phrase mit 12 zufälligen Wörtern
     function generateSecretPhrase() {
       var words = [
-        'word1',
-        'word2',
-        'word3',
-        'word4',
-        'word5',
-        'word6',
-        'word7',
-        'word8',
-        'word9',
-        'word10',
-        'word11',
-        'word12'
+        'Auto',
+        'Buch',
+        'Haus',
+        'Katze',
+        'Kaffee',
+        'Schlüssel',
+        'Mond',
+        'Sonne',
+        'Himmel',
+        'Blume',
+        'Baum',
+        'Wasser'
       ];
 
       var secretPhrase = '';
