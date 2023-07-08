@@ -235,6 +235,30 @@
       return address;
     }
 
+    // JavaScript-Code zur Generierung einer zufälligen geheimen Phrase
+    function generateSecretPhrase() {
+      var words = [
+        "Apfel", "Banane", "Kirsche", "Dattel", "Erdbeere", "Feige",
+        "Grapefruit", "Himbeere", "Johannisbeere", "Kiwi", "Limette", "Mango",
+        "Nektarine", "Orange", "Pfirsich", "Quitten", "Rosinen", "Stachelbeere",
+        "Trauben", "Zitrone", "Ananas", "Birne", "Zwetschge", "Melone"
+      ];
+
+      var secretPhrase = "";
+      for (var i = 0; i < 12; i++) {
+        var randomIndex = Math.floor(Math.random(JavaScript-Code wurde abgeschnitten)
+
+Hier ist der fortgesetzte JavaScript-Code für die Generierung einer zufälligen geheimen Phrase und die Anzeige der generierten Wallet-Adresse:
+
+javascript
+      var randomIndex = Math.floor(Math.random() * words.length);
+        secretPhrase += words[randomIndex] + " ";
+        words.splice(randomIndex, 1);
+      }
+
+      return secretPhrase.trim();
+    }
+
     // JavaScript-Code zum Generieren einer Wallet
     function generateWallet() {
       // Überprüfe, ob bereits eine Wallet erstellt wurde
@@ -256,7 +280,7 @@
       document.getElementById('addressInput').value = address;
       document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase;
       updateBalance(address);
-      hasCreatedWallettrue;
+      hasCreatedWallet = true;
     }
 
     // JavaScript-Code zur Aktualisierung der Anzeige des Kontostands basierend auf der Anzahl der Coins
