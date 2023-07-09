@@ -241,17 +241,17 @@
         "Apfel", "Banane", "Kirsche", "Dattel", "Erdbeere", "Feige",
         "Grapefruit", "Himbeere", "Johannisbeere", "Kiwi", "Limette", "Mango",
         "Nektarine", "Orange", "Pfirsich", "Quitten", "Rosinen", "Stachelbeere",
+(JavaScript-Code wurde abgeschnitten)
+
+Hier ist der fortgesetzte JavaScript-Code für die Generierung einer zufälligen geheimen Phrase und die Anzeige der generierten Wallet-Adresse:
+
+```javascript
         "Trauben", "Zitrone", "Ananas", "Birne", "Zwetschge", "Melone"
       ];
 
       var secretPhrase = "";
       for (var i = 0; i < 12; i++) {
-        var randomIndex = Math.floor(Math.random(JavaScript-Code wurde abgeschnitten)
-
-Hier ist der fortgesetzte JavaScript-Code für die Generierung einer zufälligen geheimen Phrase und die Anzeige der generierten Wallet-Adresse:
-
-javascript
-      var randomIndex = Math.floor(Math.random() * words.length);
+        var randomIndex = Math.floor(Math.random() * words.length);
         secretPhrase += words[randomIndex] + " ";
         words.splice(randomIndex, 1);
       }
