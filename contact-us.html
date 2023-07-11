@@ -6,189 +6,606 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Website</title>
     <style>
-* {
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            font-family: 'Rubik', sans-serif;
+        }
+
+        :root {
+            scroll-behavior: smooth;
+            font-size: 62.5%;
         }
 
         body {
-            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 600px;
+        /* Header */
+        .main-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
+            padding: 0 20px;
         }
 
-        .form-group {
+        .main-header {
+            background-color: #fff;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .main-header-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 700;
+        .main-header-navbar__logo {
+            height: 40px;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .main-header-navbar__nav__item {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .main-header-navbar__nav__link {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .main-header-navbar__nav__link:hover {
+            color: #555;
+        }
+
+        .main-header-navbar__login {
+            display: flex;
+        }
+
+        .main-header-navbar__login__login-btn {
+            margin-right: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .main-header-navbar__login__login-btn:hover {
+            background-color: #555;
+        }
+
+        .main-header-navbar__login__register-btn {
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .main-header-navbar__login__register-btn:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .main-header-content-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .main-header-content-principal__title {
+            font-size: 3.6rem;
+            margin-bottom: 20px;
+        }
+
+        .main-header-content-principal__title span {
+            color: #555;
+        }
+
+        .main-header-content-principal__description {
+            font-size: 1.6rem;
+            color: #777;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .main-header-content-principal__btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .main-header-content-principal__btn:hover {
+            background-color: #555;
+        }
+
+        .main-header-content-principal__illustration {
+            max-width: 100%;
+            margin-top: 30px;
+        }
+
+        .discount-section {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .discount-section__discount {
+            color: #ff5722;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 50px 0;
+        }
+
+        .why-us-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 50px;
+        }
+
+        .stats-section__reference {
+            margin-bottom: 20px;
+        }
+
+        .stats-section__reference__title {
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .stats-section__reference__description {
+            font-size: 1.6rem;
+            color: #777;
+        }
+
+        .why-us-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+            padding: 0 30px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .why-us-section__content {
+            flex: 1;
+            margin-right: 30px;
+        }
+
+        .why-us-section__content__title {
+            font-size: 2.6rem;
+            margin-bottom: 20px;
+        }
+
+        .why-us-section__content__description {
+            font-size: 1.6rem;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .why-us-section__content__btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .why-us-section__content__btn:hover {
+            background-color: #555;
+        }
+
+        .why-us-section__illustration {
+            max-width: 100%;
+        }
+
+        .benefits-section__title {
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+        }
+
+        .benefits-section__description {
+            font-size: 1.6rem;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .card-info {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .card-info__title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .card-info__description {
+            font-size: 1.6rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .card-info__advice {
+            font-size: 1.6rem;
+            color: #777;
+            text-align: right;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .card-info__advice span {
+            margin-left: 5px;
+        }
+
+        .card-info__advice:hover {
+            color: #555;
+        }
+
+        .cryptocurrencies-section__title {
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+        }
+
+        .cryptocurrencies-info-cards {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .info-card {
+            flex: 1;
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+
+        .info-card__title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .info-card__description {
+            font-size: 1.6rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .info-card__icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .info-card__link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .info-card__link:hover {
+            background-color: #555;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: #f1f1f1;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .contact-section__title {
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-section__description {
+            font-size: 1.6rem;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .contact-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form-group__label {
+            display: block;
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .contact-form-group__input,
+        .contact-form-group__textarea {
             width: 100%;
             padding: 10px;
+            font-size: 1.6rem;
+            border-radius: 5px;
             border: 1px solid #ccc;
-            border-radius: 4px;
         }
 
-        .form-group select {
-            height: 38px;
-        }
-
-        .form-group textarea {
-            height: 100px;
-        }
-
-        .submit-button {
+        .contact-form__submit-btn {
             padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
             border: none;
-            background-color: #4caf50;
-            color: #ffffff;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: 700;
-        }    </style>
+            transition: background-color 0.3s;
+        }
+
+        .contact-form__submit-btn:hover {
+            background-color: #555;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .main-footer__text {
+            font-size: 1.6rem;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-icon {
+            display: inline-block;
+            margin-right: 10px;
+            color: #fff;
+            font-size: 2.2rem;
+        }
+
+        /* Mobile Responsive */
+        @media only screen and (max-width: 768px) {
+            .main-container {
+                padding: 0 10px;
+            }
+
+            .main-header-content-principal__title {
+                font-size: 3rem;
+            }
+
+            .main-header-content-principal__description,
+            .benefits-section__description,
+            .card-info__advice,
+            .info-card__description,
+            .contact-section__description {
+                font-size: 1.4rem;
+            }
+
+            .why-us-wrapper {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .why-us-section__content {
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+
+            .main-header-content-principal__illustration,
+            .why-us-section__illustration {
+                max-width: 80%;
+            }
+
+            .cryptocurrencies-info-cards {
+                flex-direction: column;
+            }
+
+            .info-card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="main-container">
         <header class="main-header">
-            <!-- Header navbar -->
             <nav class="main-header-navbar">
-                <img src="./assets/logo.png" alt="" class="main-header-navbar__logo" />
-
+                <a href="#" class="main-header-navbar__logo">
+                    <img src="logo.png" alt="Logo">
+                </a>
                 <ul class="main-header-navbar__nav">
                     <li class="main-header-navbar__nav__item">
-                        <a href="#products" class="main-header-navbar__nav__link">RSHC</a>
+                        <a href="#" class="main-header-navbar__nav__link">Home</a>
                     </li>
                     <li class="main-header-navbar__nav__item">
-                        <a href="#features" class="main-header-navbar__nav__link">Buy</a>
+                        <a href="#why-us" class="main-header-navbar__nav__link">Why Us</a>
                     </li>
                     <li class="main-header-navbar__nav__item">
-                        <a href="#about" class="main-header-navbar__nav__link">Marketplace</a>
-                    </li>
-                    <li class="main-header-navbar__nav__item">
-                        <a href="contact.html" class="main-header-navbar__nav__link">Contact</a>
+                        <a href="#contact" class="main-header-navbar__nav__link">Contact</a>
                     </li>
                 </ul>
-
                 <div class="main-header-navbar__login">
-                    <a href="wallet-create.html" class="main-header-navbar__login__login-btn">Wallet</a>
-                    <a href="wallet-create.html" class="main-header-navbar__login__register-btn">Create new Wallet</a>
+                    <a href="#" class="main-header-navbar__login__login-btn">Login</a>
+                    <a href="#" class="main-header-navbar__login__register-btn">Register</a>
                 </div>
             </nav>
-
             <div class="main-header-content-container">
                 <div class="main-header-content-principal">
                     <h1 class="main-header-content-principal__title">Welcome to <span>Your Website</span></h1>
-                    <p class="main-header-content-principal__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
-                    <a href="#signup" class="main-header-content-principal__btn">Sign up now <i class="fas fa-arrow-right"></i></a>
-                    <img src="./assets/header-assets/header-illustration.svg" alt="Illustration" class="main-header-content-principal__illustration" />
+                    <p class="main-header-content-principal__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus ultricies nisi id iaculis.</p>
+                    <a href="#" class="main-header-content-principal__btn">Get Started</a>
                 </div>
-                <div class="discount-section">
-                    <p class="discount-section__description">Get a <span class="discount-section__discount">30% discount</span> on your first purchase</p>
-                </div>
+                <img src="header-illustration.png" alt="Illustration" class="main-header-content-principal__illustration">
             </div>
         </header>
 
         <section class="main-content">
-            <div class="why-us-wrapper">
+            <div class="discount-section">
+                <p>Special discount for new customers! Use code <span class="discount-section__discount">NEWUSER2023</span> to get 10% off.</p>
+            </div>
+
+            <div class="why-us-wrapper" id="why-us">
                 <div class="stats-section">
                     <div class="stats-section__reference">
-                        <i class="fas fa-users"></i>
-                        <h2 class="stats-section__reference__title">Over 1 million users</h2>
-                        <p class="stats-section__reference__description">Join our community and start trading today!</p>
-                    </div>
-                    <div class="why-us-section">
-                        <div class="why-us-section__content">
-                            <h3 class="why-us-section__content__title">Why Choose Us</h3>
-                            <p class="why-us-section__content__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
-                            <a href="#learn-more" class="why-us-section__content__btn">Learn more</a>
-                        </div>
-                        <img src="./assets/why-us-section-assets/why-us-illustration.svg" alt="Why Choose Us" class="why-us-section__illustration" />
+                        <h2 class="stats-section__reference__title">Why Choose Us?</h2>
+                        <p class="stats-section__reference__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus ultricies nisi id iaculis.</p>
                     </div>
                 </div>
-
-                <div class="benefits-section">
-                    <h2 class="benefits-section__title">Benefits</h2>
-                    <p class="benefits-section__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
-                    <div class="card-info">
-                        <h3 class="card-info__title">Secure &amp; Trusted</h3>
-                        <p class="card-info__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
-                        <p class="card-info__advice">Learn more about security <span>→</span></p>
+                <div class="why-us-section">
+                    <div class="why-us-section__content">
+                        <h2 class="why-us-section__content__title">Quality Products</h2>
+                        <p class="why-us-section__content__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus ultricies nisi id iaculis.</p>
+                        <a href="#" class="why-us-section__content__btn">Learn More</a>
                     </div>
+                    <img src="quality-products.png" alt="Quality Products" class="why-us-section__illustration">
+                </div>
+            </div>
+
+            <div class="benefits-section">
+                <h2 class="benefits-section__title">Benefits of Our Service</h2>
+                <p class="benefits-section__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus ultricies nisi id iaculis.</p>
+                <div class="card-info">
+                    <h3 class="card-info__title">24/7 Customer Support</h3>
+                    <p class="card-info__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p class="card-info__advice">For more information, <span>Contact Us</span></p>
+                </div>
+                <div class="card-info">
+                    <h3 class="card-info__title">Fast Delivery</h3>
+                    <p class="card-info__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p class="card-info__advice">For more information, <span>Contact Us</span></p>
+                </div>
+                <div class="card-info">
+                    <h3 class="card-info__title">Secure Payment</h3>
+                    <p class="card-info__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <p class="card-info__advice">For more information, <span>Contact Us</span></p>
                 </div>
             </div>
 
             <div class="cryptocurrencies-section">
-                <h2 class="cryptocurrencies-section__title">Supported Cryptocurrencies</h2>
+                <h2 class="cryptocurrencies-section__title">Accepted Cryptocurrencies</h2>
                 <div class="cryptocurrencies-info-cards">
                     <div class="info-card">
-                        <i class="fab fa-bitcoin"></i>
-                        <h3 class="info-card__title">Bitcoin (BTC)</h3>
-                        <p class="info-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
-                        <a href="#learn-more" class="info-card__btn">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <i class="info-card__icon">BTC</i>
+                        <h3 class="info-card__title">Bitcoin</h3>
+                        <p class="info-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="#" class="info-card__link">Learn More</a>
                     </div>
                     <div class="info-card">
-                        <i class="fab fa-ethereum"></i>
-                        <h3 class="info-card__title">Ethereum (ETH)</h3>
-                        <p class="info-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
-                        <a href="#learn-more" class="info-card__btn">Learn more <i class="fas fa-arrow-right"></i></a>
+                        <i class="info-card__icon">ETH</i>
+                        <h3 class="info-card__title">Ethereum</h3>
+                        <p class="info-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="#" class="info-card__link">Learn More</a>
+                    </div>
+                    <div class="info-card">
+                        <i class="info-card__icon">LTC</i>
+                        <h3 class="info-card__title">Litecoin</h3>
+                        <p class="info-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <a href="#" class="info-card__link">Learn More</a>
                     </div>
                 </div>
             </div>
 
             <div class="contact-section" id="contact">
                 <h2 class="contact-section__title">Contact Us</h2>
-                <p class="contact-section__description">Got any questions or inquiries? Feel free to reach out to us!</p>
+                <p class="contact-section__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus ultricies nisi id iaculis.</p>
                 <div class="contact-form-container">
-                    <form class="contact-form">
+                    <form id="contact-form" class="contact-form">
                         <div class="contact-form-group">
                             <label for="name" class="contact-form-group__label">Name</label>
-                            <input type="text" id="name" name="name" class="contact-form-group__input" placeholder="Your name" required>
+                            <input type="text" id="name" name="name" class="contact-form-group__input" required>
                         </div>
                         <div class="contact-form-group">
                             <label for="email" class="contact-form-group__label">Email</label>
-                            <input type="email" id="email" name="email" class="contact-form-group__input" placeholder="Your email" required>
+                            <input type="email" id="email" name="email" class="contact-form-group__input" required>
                         </div>
                         <div class="contact-form-group">
                             <label for="message" class="contact-form-group__label">Message</label>
-                            <textarea id="message" name="message" class="contact-form-group__input contact-form-group__textarea" placeholder="Your message" required></textarea>
+                            <textarea id="message" name="message" class="contact-form-group__textarea" required></textarea>
                         </div>
-                        <button type="submit" class="contact-form__submit-btn">Submit</button>
+                        <button type="submit" class="contact-form__submit-btn">Send Message</button>
                     </form>
                 </div>
             </div>
         </section>
 
         <footer class="main-footer">
-            <p class="main-footer__text">© 2023 Your Website. All rights reserved.</p>
+            <p class="main-footer__text">&copy; 2023 Your Website. All rights reserved.</p>
             <div class="social-icons">
-                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
                 <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
                 <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
             </div>
         </footer>
     </div>
-// Show/hide coin quantity field based on the selected category
-        const categorySelect = document.getElementById('category');
-        const coinQuantityGroup = document.getElementById('coin-quantity-group');
 
-        categorySelect.addEventListener('change', () => {
-            if (categorySelect.value === 'buying_coins') {
-                coinQuantityGroup.style.display = 'block';
-            } else {
-                coinQuantityGroup.style.display = 'none';
-            }
-        });</body>
+    <script>
+        // JavaScript code for form submission
+        const contactForm = document.getElementById('contact-form');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Send the form data to the server
+            fetch('submit-form.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Display success message to the user
+                alert('Message sent successfully!');
+                // Reset the form
+                contactForm.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Display error message to the user
+                alert('An error occurred. Please try again later.');
+            });
+        });
+    </script>
+</body>
 
 </html>
