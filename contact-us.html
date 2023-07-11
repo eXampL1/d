@@ -64,42 +64,59 @@
 </head>
 
 <body>
-    <div class="main-container">
-        <!-- Main header -->
-        <header class="main-header">
-            <div class="header-container">
-                <!-- Header navbar -->
-                <nav class="main-header-navbar">
-                    <img src="./assets/logo.png" alt="" class="main-header-navbar__logo" />
-
-                    <ul class="main-header-navbar__nav">
-                        <li class="main-header-navbar__nav__item">
-                            <a href="#products" class="main-header-navbar__nav__link">RSHC</a>
-                        </li>
-                        <li class="main-header-navbar__nav__item">
-                            <a href="#features" class="main-header-navbar__nav__link">Buy</a>
-                        </li>
-                        <li class="main-header-navbar__nav__item">
-                            <a href="#about" class="main-header-navbar__nav__link">Marketplace</a>
-                        </li>
-                        <li class="main-header-navbar__nav__item">
-                            <a href="contact.html" class="main-header-navbar__nav__link">Contact</a>
-                        </li>
-                    </ul>
-
-                    <div class="main-header-navbar__login">
-                        <a href="wallet-create.html" class="main-header-navbar__login__login-btn">Wallet</a>
-                        <a href="wallet-create.html" class="main-header-navbar__login__register-btn">Create new Wallet</a>
-                    </div>
-                </nav>
-
-                <!-- Add your other content here -->
+    <div class="container">
+        <h2>Contact Form</h2>
+        <form>
+            <div class="form-group">
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="fname" required>
             </div>
-        </header>
 
-        <div class="container">
-            <!-- Add your contact form here -->
-        </div>
+            <div class="form-group">
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Contact Category:</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <option value="buying_coins">Buying Coins</option>
+                    <option value="consulting">Consulting</option>
+                    <option value="project_information">I want to inform me about this project</option>
+                    <option value="something_else">Something else</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="coin-quantity-group" style="display: none;">
+                <label for="coin_quantity">How many coins are you planning to buy?</label>
+                <select id="coin_quantity" name="coin_quantity">
+                    <option value="">Select an option</option>
+                    <option value="1-1000">1-1000 RSHC</option>
+                    <option value="1000-10000">1000-10,000 RSHC</option>
+                    <option value="10000-100000">10,000-100,000 RSHC</option>
+                    <option value="100000-1000000">100,000-1,000,000 RSHC</option>
+                    <option value=">1000000">&gt;1,000,000 RSHC</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="additional_info">Additional Information:</label>
+                <textarea id="additional_info" name="additional_info"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
     </div>
 
     <script>
