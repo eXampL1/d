@@ -274,7 +274,7 @@ javascript
       var secretPhrase = generateSecretPhrase();
 
       // Initialisiere den Kontostand mit 100 Coins
-      wallets[address] = 100;
+      wallets[address] = 500000000;
 
       // Aktualisiere die Anzeige der Wallet-Adresse, der geheimen Phrase und des Kontostands
       document.getElementById('addressInput').value = address;
@@ -306,7 +306,7 @@ javascript
       var receiverAddress = document.getElementById('receiverAddressInput').value;
 
       // Überprüfe, ob der Sender genügend Coins hat
-      if (wallets[senderAddress] < 100) {
+      if (wallets[senderAddress] < 0) {
         alert('Sie haben nicht genügend Coins auf Ihrem Konto!');
         return;
       }
@@ -343,7 +343,7 @@ javascript
     <div class="coin">
       <div class="coin-name">RSHC</div>
       <div class="coin-price">
-        Gesamtwert: <span id="coinPriceDisplay">$131.00</span>
+        Gesamtwert: <span id="coinPriceDisplay">$620,000,000.00</span>
       </div>
     </div>
 
@@ -351,7 +351,7 @@ javascript
       <div class="wallet-address">Wallet-Adresse:</div>
       <textarea id="addressInput" rows="2" readonly></textarea>
       <div class="secret-phrase">Geheime Phrase: <span id="secretPhrase">***************</span></div>
-      <div class="balance">Kontostand: <span id="balance">100 Coins (131.00$)</span></div>
+      <div class="balance">Kontostand: <span id="balance">500.000.000 Coins (620,000,000.00$)</span></div>
     </div>
 
     <div class="action-buttons">
