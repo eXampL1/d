@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group select {
+            height: 38px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4caf50;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Main header -->
+        <header class="main-header">
+            <div class="header-container">
+                <!-- Header navbar -->
+                <nav class="main-header-navbar">
+                    <img src="./assets/logo.png" alt="" class="main-header-navbar__logo" />
+
+                    <ul class="main-header-navbar__nav">
+                        <li class="main-header-navbar__nav__item">
+                            <a href="#products" class="main-header-navbar__nav__link">RSHC</a>
+                        </li>
+                        <li class="main-header-navbar__nav__item">
+                            <a href="#features" class="main-header-navbar__nav__link">Buy</a>
+                        </li>
+                        <li class="main-header-navbar__nav__item">
+                            <a href="#about" class="main-header-navbar__nav__link">Marketplace</a>
+                        </li>
+                        <li class="main-header-navbar__nav__item">
+                            <a href="contact.html" class="main-header-navbar__nav__link">Contact</a>
+                        </li>
+                    </ul>
+
+                    <div class="main-header-navbar__login">
+                        <a href="wallet-create.html" class="main-header-navbar__login__login-btn">Wallet</a>
+                        <a href="wallet-create.html" class="main-header-navbar__login__register-btn">Create new Wallet</a>
+                    </div>
+                </nav>
+
+                <!-- Add your other content here -->
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Add your contact form here -->
+        </div>
+    </div>
+
+    <script>
+        // Show/hide coin quantity field based on the selected category
+        const categorySelect = document.getElementById('category');
+        const coinQuantityGroup = document.getElementById('coin-quantity-group');
+
+        categorySelect.addEventListener('change', () => {
+            if (categorySelect.value === 'buying_coins') {
+                coinQuantityGroup.style.display = 'block';
+            } else {
+                coinQuantityGroup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
