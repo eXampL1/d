@@ -3,13 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+    <title>Your Website</title>
     <style>
-        * {
+* {
             box-sizing: border-box;
             font-family: 'Rubik', sans-serif;
         }
@@ -59,68 +56,130 @@
             color: #ffffff;
             cursor: pointer;
             font-weight: 700;
-        }
-    </style>
+        }    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>Contact Form</h2>
-        <form>
-            <div class="form-group">
-                <label for="fname">First Name:</label>
-                <input type="text" id="fname" name="fname" required>
+    <div class="main-container">
+        <header class="main-header">
+            <!-- Header navbar -->
+            <nav class="main-header-navbar">
+                <img src="./assets/logo.png" alt="" class="main-header-navbar__logo" />
+
+                <ul class="main-header-navbar__nav">
+                    <li class="main-header-navbar__nav__item">
+                        <a href="#products" class="main-header-navbar__nav__link">RSHC</a>
+                    </li>
+                    <li class="main-header-navbar__nav__item">
+                        <a href="#features" class="main-header-navbar__nav__link">Buy</a>
+                    </li>
+                    <li class="main-header-navbar__nav__item">
+                        <a href="#about" class="main-header-navbar__nav__link">Marketplace</a>
+                    </li>
+                    <li class="main-header-navbar__nav__item">
+                        <a href="contact.html" class="main-header-navbar__nav__link">Contact</a>
+                    </li>
+                </ul>
+
+                <div class="main-header-navbar__login">
+                    <a href="wallet-create.html" class="main-header-navbar__login__login-btn">Wallet</a>
+                    <a href="wallet-create.html" class="main-header-navbar__login__register-btn">Create new Wallet</a>
+                </div>
+            </nav>
+
+            <div class="main-header-content-container">
+                <div class="main-header-content-principal">
+                    <h1 class="main-header-content-principal__title">Welcome to <span>Your Website</span></h1>
+                    <p class="main-header-content-principal__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
+                    <a href="#signup" class="main-header-content-principal__btn">Sign up now <i class="fas fa-arrow-right"></i></a>
+                    <img src="./assets/header-assets/header-illustration.svg" alt="Illustration" class="main-header-content-principal__illustration" />
+                </div>
+                <div class="discount-section">
+                    <p class="discount-section__description">Get a <span class="discount-section__discount">30% discount</span> on your first purchase</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="main-content">
+            <div class="why-us-wrapper">
+                <div class="stats-section">
+                    <div class="stats-section__reference">
+                        <i class="fas fa-users"></i>
+                        <h2 class="stats-section__reference__title">Over 1 million users</h2>
+                        <p class="stats-section__reference__description">Join our community and start trading today!</p>
+                    </div>
+                    <div class="why-us-section">
+                        <div class="why-us-section__content">
+                            <h3 class="why-us-section__content__title">Why Choose Us</h3>
+                            <p class="why-us-section__content__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
+                            <a href="#learn-more" class="why-us-section__content__btn">Learn more</a>
+                        </div>
+                        <img src="./assets/why-us-section-assets/why-us-illustration.svg" alt="Why Choose Us" class="why-us-section__illustration" />
+                    </div>
+                </div>
+
+                <div class="benefits-section">
+                    <h2 class="benefits-section__title">Benefits</h2>
+                    <p class="benefits-section__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
+                    <div class="card-info">
+                        <h3 class="card-info__title">Secure &amp; Trusted</h3>
+                        <p class="card-info__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
+                        <p class="card-info__advice">Learn more about security <span>→</span></p>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="lname">Last Name:</label>
-                <input type="text" id="lname" name="lname" required>
+            <div class="cryptocurrencies-section">
+                <h2 class="cryptocurrencies-section__title">Supported Cryptocurrencies</h2>
+                <div class="cryptocurrencies-info-cards">
+                    <div class="info-card">
+                        <i class="fab fa-bitcoin"></i>
+                        <h3 class="info-card__title">Bitcoin (BTC)</h3>
+                        <p class="info-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
+                        <a href="#learn-more" class="info-card__btn">Learn more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="info-card">
+                        <i class="fab fa-ethereum"></i>
+                        <h3 class="info-card__title">Ethereum (ETH)</h3>
+                        <p class="info-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et erat ac mauris sagittis ultrices eu eget ante.</p>
+                        <a href="#learn-more" class="info-card__btn">Learn more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" required>
+            <div class="contact-section" id="contact">
+                <h2 class="contact-section__title">Contact Us</h2>
+                <p class="contact-section__description">Got any questions or inquiries? Feel free to reach out to us!</p>
+                <div class="contact-form-container">
+                    <form class="contact-form">
+                        <div class="contact-form-group">
+                            <label for="name" class="contact-form-group__label">Name</label>
+                            <input type="text" id="name" name="name" class="contact-form-group__input" placeholder="Your name" required>
+                        </div>
+                        <div class="contact-form-group">
+                            <label for="email" class="contact-form-group__label">Email</label>
+                            <input type="email" id="email" name="email" class="contact-form-group__input" placeholder="Your email" required>
+                        </div>
+                        <div class="contact-form-group">
+                            <label for="message" class="contact-form-group__label">Message</label>
+                            <textarea id="message" name="message" class="contact-form-group__input contact-form-group__textarea" placeholder="Your message" required></textarea>
+                        </div>
+                        <button type="submit" class="contact-form__submit-btn">Submit</button>
+                    </form>
+                </div>
             </div>
+        </section>
 
-            <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required>
+        <footer class="main-footer">
+            <p class="main-footer__text">© 2023 Your Website. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
             </div>
-
-            <div class="form-group">
-                <label for="category">Contact Category:</label>
-                <select id="category" name="category" required>
-                    <option value="">Select a category</option>
-                    <option value="buying_coins">Buying Coins</option>
-                    <option value="consulting">Consulting</option>
-                    <option value="project_information">I want to inform me about this project</option>
-                    <option value="something_else">Something else</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="coin-quantity-group" style="display: none;">
-                <label for="coin_quantity">How many coins are you planning to buy?</label>
-                <select id="coin_quantity" name="coin_quantity">
-                    <option value="">Select an option</option>
-                    <option value="1-1000">1-1000 RSHC</option>
-                    <option value="1000-10000">1000-10,000 RSHC</option>
-                    <option value="10000-100000">10,000-100,000 RSHC</option>
-                    <option value="100000-1000000">100,000-1,000,000 RSHC</option>
-                    <option value=">1000000">&gt;1,000,000 RSHC</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="additional_info">Additional Information:</label>
-                <textarea id="additional_info" name="additional_info"></textarea>
-            </div>
-
-            <button type="submit" class="submit-button">Submit</button>
-        </form>
+        </footer>
     </div>
-
-    <script>
-        // Show/hide coin quantity field based on the selected category
+// Show/hide coin quantity field based on the selected category
         const categorySelect = document.getElementById('category');
         const coinQuantityGroup = document.getElementById('coin-quantity-group');
 
@@ -130,8 +189,6 @@
             } else {
                 coinQuantityGroup.style.display = 'none';
             }
-        });
-    </script>
-</body>
+        });</body>
 
 </html>
