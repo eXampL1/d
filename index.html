@@ -296,6 +296,18 @@
         <!-- Attribution footer -->
 
     </div>
+
+    <script>
+        function changeLanguage(lang) {
+            document.documentElement.lang = lang;
+        }
+    </script>
+
+    <div class="language-selector">
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('de')">Deutsch</button>
+        <button onclick="changeLanguage('es')">Español</button>
+    </div>
 </body>
 
 </html>
