@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MetaMask-like Interface - Send Coins</title>
+  <style>
+    /* CSS-Styling für das MetaMask-Interface */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .wallet {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .wallet-address {
+      font-size: 16px;
+      color: #333333;
+      margin-bottom: 5px;
+    }
+
+    .balance {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333333;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 50px;
+      margin: 0 auto;
+      margin-top: 20px;
+      background-color: #8e44ad;
+      color: #ffffff;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .button:hover {
+      background-color: #7d3c98;
+    }
+  </style>
+  <script>
+    var wallets = {};
+
+    // JavaScript-Code zur Initialisierung der Wallet-Daten
+    function initializeWallet() {
+      var walletAddress = sessionStorage.getItem('walletAddress');
+
+      // Überprüfen, ob eine Wallet-Adresse vorhanden ist
+      if (walletAddress) {
+        document.getElementById('addressInput').innerText = walletAddress;
+
+        // Überprüfen, ob die Wallet bereits erstellt wurde
+        if (wallets[walletAddress]) {
+          updateBalance(walletAddress);
+        } else {
+          // Falls die Wallet neu ist, initialisieren wir den Kontostand mit 100 Coins
+          wallets[walletAddress] = 100;
+          updateBalance(walletAddress);
+        }
+      }
+    }
+
+    // JavaScript-Code zur Aktualisierung des Kontostands
+    function updateBalance(address) {
+      var balance = wallets[address];
+      document.getElementById('balance').innerText = balance + ' Coins';
+    }
+
+    // JavaScript-Code zum Senden von Coins
+    function sendCoins() {
+      var senderAddress = sessionStorage.getItem('walletAddress');
+      var receiverAddress = document.getElementById('receiverAddress').value;
+      var quantity = parseInt(document.getElementById('coinQuantity').value);
+
+      // Überprüfen, ob die Empfängeradresse gültig ist
+      if (!wallets[receiverAddress]) {
+        alert('Ungültige Empfängeradresse!');
+        return;
+      }
+
+      // Überprüfen, ob der Absender ausreichend Coins hat
+      if (wallets[senderAddress] < quantity) {
+        alert('Unzureichender Kontostand!');
+        return;
+      }
+
+      // Coins senden und den Kontostand aktualisieren
+      wallets[senderAddress] -= quantity;
+      wallets[receiverAddress] += quantity;
+
+      // Aktualisierung der Kontostände anzeigen
+      updateBalance(senderAddress);
+      updateBalance(receiverAddress);
+
+      // Bestätigungsnachricht anzeigen
+      alert(quantity + ' Coins wurden erfolgreich gesendet!');
+    }
+  </script>
+</head>
+<body onload="initializeWallet()">
+  <div class="container">
+    <div class="wallet">
+      <div class="wallet-address">Wallet-Adresse:</div>
+      <div id="addressInput"></div>
+      <div class="balance">Kontostand: <span id="balance"></span></div>
+    </div>
+    <div class="transaction">
+      <input type="text" id="receiverAddress" placeholder="Empfängeradresse" /><br>
+      <input type="number" id="coinQuantity" placeholder="Coin-Menge" /><br>
+      <button class="button" onclick="sendCoins()">Transaktion senden</button>
+    </div>
+  </div>
+</body>
+</html>
