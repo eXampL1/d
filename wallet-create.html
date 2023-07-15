@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RSHC Wallet</title>
+  <title>MetaMask-like Interface</title>
   <style>
     /* CSS-Styling für das MetaMask-Interface */
     body {
@@ -19,209 +19,54 @@
       border: 1px solid #dddddd;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-    }
-
-    .coin {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .coin-name {
+      margin-top: 0;
       font-size: 24px;
       font-weight: bold;
       color: #333333;
     }
 
-    .coin-price {
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+
+    .welcome-text {
       font-size: 18px;
-      color: #666666;
-    }
-
-    .wallet {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .wallet-address {
-      font-size: 16px;
+      font-weight: bold;
       color: #333333;
-      margin-bottom: 5px;
-    }
-
-    .secret-phrase {
-      font-size: 14px;
-      color: #666666;
-    }
-
-    .balance {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333333;
+      margin-bottom: 20px;
     }
 
     .button {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
+      width: 200px;
       height: 50px;
-      border-radius: 50%;
+      margin: 0 auto;
       background-color: #8e44ad;
       color: #ffffff;
       text-decoration: none;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
     }
 
     .button:hover {
-      background-color: #7d3c98;
-    }
-
-    .receive-button {
-      background-color: #8e44ad;
-    }
-
-    .receive-button:hover {
-      background-color: #7d3c98;
-    }
-
-    .send-button {
-      background-color: #8e44ad;
-    }
-
-    .send-button:hover {
-      background-color: #7d3c98;
-    }
-
-    .action-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .action-button-label {
-      font-size: 12px;
-      color: #666666;
-      margin-top: 5px;
-      text-align: center;
-    }
-
-    .transaction-history {
-      margin-top: 20px;
-    }
-
-    .transaction-history-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .transaction {
-      margin-bottom: 5px;
-    }
-
-    /* Modernes Design für das Senden-Fenster */
-    .send-window {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      padding: 20px;
-      background-color: #ffffff;
-      border: 1px solid #dddddd;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .send-window h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .send-window input[type="text"] {
-      width: 100%;
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-
-    .send-window button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background-color: #8e44ad;
-      color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .send-window button:hover {
-      background-color: #7d3c98;
-    }
-
-    .confirmation {
-      display: none;
-      margin-top: 10px;
-      padding: 10px;
-      background-color: #f2f2f2;
-      border: 1px solid #dddddd;
-      border-radius: 5px;
-    }
-
-    .confirmation p {
-      margin: 0;
-      font-weight: bold;
-      color: #333333;
-    }
-
-    .login-section {
-      margin-top: 20px;
-    }
-
-    .login-section h2 {
-      font-size: 18px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .login-section input[type="email"],
-    .login-section input[type="password"],
-    .login-section input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #dddddd;
-      border-radius: 5px;
-    }
-
-    .login-section button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background-color: #8e44ad;
-      color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .login-section button:hover {
       background-color: #7d3c98;
     }
   </style>
   <script>
     var wallets = {};
     var hasCreatedWallet = false;
-    var coinPrice = 1.33;
+    var coinPrice = 1.31;
 
     // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
     function generateRandomAddress() {
@@ -241,11 +86,6 @@
         "Apfel", "Banane", "Kirsche", "Dattel", "Erdbeere", "Feige",
         "Grapefruit", "Himbeere", "Johannisbeere", "Kiwi", "Limette", "Mango",
         "Nektarine", "Orange", "Pfirsich", "Quitten", "Rosinen", "Stachelbeere",
-(JavaScript-Code wurde abgeschnitten)
-
-Hier ist der fortgesetzte JavaScript-Code für die Generierung einer zufälligen geheimen Phrase und die Anzeige der generierten Wallet-Adresse:
-
-javascript
         "Trauben", "Zitrone", "Ananas", "Birne", "Zwetschge", "Melone"
       ];
 
@@ -274,7 +114,7 @@ javascript
       var secretPhrase = generateSecretPhrase();
 
       // Initialisiere den Kontostand mit 100 Coins
-      wallets[address] = 500000000;
+      wallets[address] = 100;
 
       // Aktualisiere die Anzeige der Wallet-Adresse, der geheimen Phrase und des Kontostands
       document.getElementById('addressInput').value = address;
@@ -306,7 +146,7 @@ javascript
       var receiverAddress = document.getElementById('receiverAddressInput').value;
 
       // Überprüfe, ob der Sender genügend Coins hat
-      if (wallets[senderAddress] < 0) {
+      if (wallets[senderAddress] < 100) {
         alert('Sie haben nicht genügend Coins auf Ihrem Konto!');
         return;
       }
@@ -338,58 +178,24 @@ javascript
 </head>
 <body>
   <div class="container">
-    <h1>RSHC Wallet</h1>
-
-    <div class="coin">
-      <div class="coin-name">RSHC</div>
-      <div class="coin-price">
-        Gesamtwert: <span id="coinPriceDisplay">$620,000,000.00</span>
-      </div>
-    </div>
-
-    <div class="wallet">
-      <div class="wallet-address">Wallet-Adresse:</div>
-      <div class="balance"><span id="balance">0x0000000000000000000000000000000000000000</span></div>
-      <div class="secret-phrase">Geheime Phrase: <span id="secretPhrase">Click to generate Genesis</span></div>
-      <div class="balance">Kontostand: <span id="balance">500.000.000 Coins (620,000,000.00$)</span></div>
-    </div>
+    <img class="logo" src="logo.png" alt="RSHC Logo">
+    <h1>Create your wallet!</h1>
 
     <div class="action-buttons">
       <div>
-        <button class="button" onclick="generateWallet()">Erstellen</button>
-        <div class="action-button-label">Erstelle Wallet</div>
+        <button class="button" onclick="generateWallet()">Create Wallet</button>
       </div>
-      <div>
-        <button class="button send-button" onclick="openSendWindow()">-</button>
-        <div class="action-button-label">Senden</div>
-      </div>
-      <div>
-        <button class="button receive-button" onclick="displayWalletAddress()">+</button>
-        <div class="action-button-label">Empfangen</div>
-      </div>
-    </div>
-
-    <div class="transaction-history">
-      <div class="transaction-history-title">Transaktionsverlauf</div>
-      <div id="transactionHistory"></div>
     </div>
 
     <div id="sendWindow" class="send-window">
-      <h2>Coins senden</h2>
-      <input type="text" id="receiverAddressInput" placeholder="Empfängeradresse">
-      <button onclick="sendCoins()">Transaktion senden</button>
-      <button onclick="closeSendWindow()">Abbrechen</button>
+      <h2>Send Coins</h2>
+      <input type="text" id="receiverAddressInput" placeholder="Receiver Address">
+      <button onclick="sendCoins()">Send Transaction</button>
+      <button onclick="closeSendWindow()">Cancel</button>
     </div>
 
     <div id="confirmation" class="confirmation">
       <p id="confirmationText"></p>
-    </div>
-
-    <div class="login-section">
-      <h2>Anmelden</h2>
-      <input type="email" id="emailInput" placeholder="E-Mail">
-      <input type="password" id="passwordInput" placeholder="Passwort">
-      <button onclick="login()">Anmelden</button>
     </div>
   </div>
 </body>
