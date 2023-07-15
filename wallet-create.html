@@ -64,115 +64,8 @@
     }
   </style>
   <script>
-    var wallets = {};
-    var hasCreatedWallet = false;
-    var coinPrice = 1.31;
-
-    // JavaScript-Code zur Generierung einer zufälligen Wallet-Adresse
-    function generateRandomAddress() {
-      var address = '0x';
-      var characters = '0123456789ABCDEFabcdef';
-
-      for (var i = 0; i < 32; i++) {
-        address += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-
-      return address;
-    }
-
-    // JavaScript-Code zur Generierung einer zufälligen geheimen Phrase
-    function generateSecretPhrase() {
-      var words = [
-        "Apfel", "Banane", "Kirsche", "Dattel", "Erdbeere", "Feige",
-        "Grapefruit", "Himbeere", "Johannisbeere", "Kiwi", "Limette", "Mango",
-        "Nektarine", "Orange", "Pfirsich", "Quitten", "Rosinen", "Stachelbeere",
-        "Trauben", "Zitrone", "Ananas", "Birne", "Zwetschge", "Melone"
-      ];
-
-      var secretPhrase = "";
-      for (var i = 0; i < 12; i++) {
-        var randomIndex = Math.floor(Math.random() * words.length);
-        secretPhrase += words[randomIndex] + " ";
-        words.splice(randomIndex, 1);
-      }
-
-      return secretPhrase.trim();
-    }
-
-    // JavaScript-Code zum Generieren einer Wallet
-    function generateWallet() {
-      // Überprüfe, ob bereits eine Wallet erstellt wurde
-      if (hasCreatedWallet) {
-        alert('Es wurde bereits eine Wallet erstellt!');
-        return;
-      }
-
-      // Generiere eine zufällige Wallet-Adresse
-      var address = generateRandomAddress();
-
-      // Generiere eine geheime Phrase mit 12 zufälligen Wörtern
-      var secretPhrase = generateSecretPhrase();
-
-      // Initialisiere den Kontostand mit 100 Coins
-      wallets[address] = 100;
-
-      // Aktualisiere die Anzeige der Wallet-Adresse, der geheimen Phrase und des Kontostands
-      document.getElementById('addressInput').value = address;
-      document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase;
-      updateBalance(address);
-      hasCreatedWallet = true;
-    }
-
-    // JavaScript-Code zur Aktualisierung der Anzeige des Kontostands basierend auf der Anzahl der Coins
-    function updateBalance(address) {
-      var balance = wallets[address];
-      var totalValue = balance * coinPrice;
-      document.getElementById('balance').innerText = balance + ' Coins (' + totalValue.toFixed(2) + '$)';
-    }
-
-    // JavaScript-Code zum Anzeigen des Senden-Fensters
-    function openSendWindow() {
-      document.getElementById('sendWindow').style.display = 'block';
-    }
-
-    // JavaScript-Code zum Schließen des Senden-Fensters
-    function closeSendWindow() {
-      document.getElementById('sendWindow').style.display = 'none';
-    }
-
-    // JavaScript-Code zum Senden von Coins
-    function sendCoins() {
-      var senderAddress = document.getElementById('addressInput').value;
-      var receiverAddress = document.getElementById('receiverAddressInput').value;
-
-      // Überprüfe, ob der Sender genügend Coins hat
-      if (wallets[senderAddress] < 100) {
-        alert('Sie haben nicht genügend Coins auf Ihrem Konto!');
-        return;
-      }
-
-      // Überprüfe, ob die Empfängeradresse gültig ist
-      if (receiverAddress.length !== 42 || !receiverAddress.startsWith('0x')) {
-        alert('Ungültige Empfängeradresse!');
-        return;
-      }
-
-      // Führe die Transaktion durch
-      wallets[senderAddress] -= 100;
-      wallets[receiverAddress] = wallets[receiverAddress] ? wallets[receiverAddress] + 100 : 100;
-
-      // Aktualisiere die Anzeige des Kontostands
-      updateBalance(senderAddress);
-
-      // Zeige die Bestätigungsnachricht an
-      document.getElementById('confirmationText').innerText = 'Die Transaktion wurde erfolgreich durchgeführt. Sie haben 100 Coins an ' + receiverAddress + ' gesendet.';
-      document.getElementById('confirmation').style.display = 'block';
-    }
-
-    // JavaScript-Code zur Anzeige der generierten Wallet-Adresse
-    function displayWalletAddress() {
-      var address = document.getElementById('addressInput').value;
-      alert('Ihre generierte Wallet-Adresse lautet:\n' + address);
+    function redirectToGenerateWallet() {
+      window.location.href = "generate_wallet.html";
     }
   </script>
 </head>
@@ -180,23 +73,7 @@
   <div class="container">
     <img class="logo" src="logo.png" alt="RSHC Logo">
     <h1>Create your wallet!</h1>
-
-    <div class="action-buttons">
-      <div>
-        <button class="button" onclick="generateWallet()">Create Wallet</button>
-      </div>
-    </div>
-
-    <div id="sendWindow" class="send-window">
-      <h2>Send Coins</h2>
-      <input type="text" id="receiverAddressInput" placeholder="Receiver Address">
-      <button onclick="sendCoins()">Send Transaction</button>
-      <button onclick="closeSendWindow()">Cancel</button>
-    </div>
-
-    <div id="confirmation" class="confirmation">
-      <p id="confirmationText"></p>
-    </div>
+    <button class="button" onclick="redirectToGenerateWallet()">Create Wallet</button>
   </div>
 </body>
 </html>
