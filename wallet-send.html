@@ -39,6 +39,15 @@
       color: #333333;
     }
 
+    .transaction {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .input-field {
+      margin-bottom: 10px;
+    }
+
     .button {
       display: flex;
       align-items: center;
@@ -46,7 +55,6 @@
       width: 200px;
       height: 50px;
       margin: 0 auto;
-      margin-top: 20px;
       background-color: #8e44ad;
       color: #ffffff;
       text-decoration: none;
@@ -128,9 +136,13 @@
       <div class="balance">Kontostand: <span id="balance"></span></div>
     </div>
     <div class="transaction">
-      <input type="text" id="receiverAddress" placeholder="Empfängeradresse" /><br>
-      <input type="number" id="coinQuantity" placeholder="Coin-Menge" /><br>
-      <button class="button" onclick="sendCoins()">Transaktion senden</button>
+      <div class="input-field">
+        <input type="text" id="receiverAddress" placeholder="Empfängeradresse" />
+      </div>
+      <div class="input-field">
+        <input type="number" id="coinQuantity" placeholder="Coin-Menge" />
+      </div>
+      <button class="button" onclick="sendCoins()">Coins senden</button>
     </div>
   </div>
 </body>
