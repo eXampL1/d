@@ -70,7 +70,30 @@
     }
   </style>
   <script>
-    var wallets = {};
+    var db;
+
+    // Öffnen der Datenbankverbindung
+    var request = indexedDB.open('walletDatabase', 1);
+
+    request.onerror = function() {
+      console.log('Datenbankfehler');
+    };
+
+    request.onsuccess = function() {
+      db = request.result;
+      console.log('Datenbank geöffnet');
+      initializeWallet();
+    };
+
+    request.onupgradeneeded = function(event) {
+      db = event.target.result;
+      console.log('Datenbank erstellt/aktualisiert');
+
+      if (!db.objectStoreNames.contains('wallets')) {
+        var objectStore = db.createObjectStore('wallets', { keyPath: 'address' });
+        objectStore.createIndex('balance', 'balance', { unique: false });
+      }
+    };
 
     // JavaScript-Code zur Initialisierung der Wallet-Daten
     function initializeWallet() {
@@ -80,14 +103,33 @@
       if (walletAddress) {
         document.getElementById('addressInput').innerText = walletAddress;
 
-        // Überprüfen, ob die Wallet bereits erstellt wurde
-        if (wallets[walletAddress]) {
+        // Überprüfen, ob die Wallet bereits in der Datenbank existiert
+        var transaction = db.transaction(['wallets'], 'readwrite');
+        var objectStore = transaction.objectStore('wallets');
+        var getRequest = objectStore.get(walletAddress);
+
+        getRequest.onsuccess = function(event) {
+          var walletData = event.target.result;
+
+          if (walletData) {
+            // Wallet existiert bereits in der Datenbank, Kontostand aktualisieren
+            wallets[walletAddress] = walletData.balance;
+          } else {
+            // Wallet ist neu, initialisieren mit 0 Coins und in der Datenbank speichern
+            wallets[walletAddress] = 0;
+
+            var addRequest = objectStore.add({ address: walletAddress, balance: 0 });
+            addRequest.onsuccess = function() {
+              console.log('Wallet in der Datenbank gespeichert');
+            };
+          }
+
           updateBalance(walletAddress);
-        } else {
-          // Falls die Wallet neu ist, initialisieren wir den Kontostand mit 100 Coins
-          wallets[walletAddress] = 100;
-          updateBalance(walletAddress);
-        }
+        };
+
+        getRequest.onerror = function() {
+          console.log('Fehler beim Abrufen der Wallet-Daten aus der Datenbank');
+        };
       }
     }
 
@@ -125,6 +167,21 @@
 
       // Bestätigungsnachricht anzeigen
       alert(quantity + ' Coins wurden erfolgreich gesendet!');
+
+      // Aktualisieren der Wallet-Daten in der Datenbank
+      var transaction = db.transaction(['wallets'], 'readwrite');
+      var objectStore = transaction.objectStore('wallets');
+      var updateRequest = objectStore.put({ address: senderAddress, balance: wallets[senderAddress] });
+
+      updateRequest.onsuccess = function() {
+        console.log('Absender-Kontostand in der Datenbank aktualisiert');
+      };
+
+      var updateRequest2 = objectStore.put({ address: receiverAddress, balance: wallets[receiverAddress] });
+
+      updateRequest2.onsuccess = function() {
+        console.log('Empfänger-Kontostand in der Datenbank aktualisiert');
+      };
     }
   </script>
 </head>
