@@ -70,6 +70,11 @@
       document.getElementById('addressInput').innerText = walletAddress;
       document.getElementById('secretPhrase').innerText = 'Geheime Phrase: ' + secretPhrase;
     });
+
+    // JavaScript-Code zum Weiterleiten zur nächsten Seite
+    function redirectToWalletSend() {
+      window.location.href = "wallet-send.html";
+    }
   </script>
 </head>
 <body>
@@ -79,7 +84,7 @@
       <div id="addressInput"></div>
       <div class="secret-phrase" id="secretPhrase">Geheime Phrase: ***************</div>
     </div>
-    <a class="button" href="wallet-create.html">Back to Create Wallet</a>
+    <button class="button" onclick="redirectToWalletSend()">Continue to Send Coins</button>
   </div>
 </body>
 </html>
