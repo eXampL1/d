@@ -45,11 +45,12 @@
     .button-container {
       display: flex;
       justify-content: space-between;
+      margin-top: 16px;
     }
 
     .action-button {
-      width: 120px;
-      height: 120px;
+      width: 80px;
+      height: 80px;
       background-color: #8b32b0;
       border-radius: 50%;
       display: flex;
@@ -61,68 +62,6 @@
       font-weight: bold;
       cursor: pointer;
     }
-
-    .send-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .send-modal-content {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 20px;
-      width: 300px;
-      text-align: center;
-    }
-
-    .close-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-    }
-
-    .input-field {
-      margin-bottom: 16px;
-    }
-
-    .input-field label {
-      display: block;
-      margin-bottom: 4px;
-      color: #8b32b0;
-    }
-
-    .input-field input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    .input-field button {
-      width: 100%;
-      padding: 8px;
-      background-color: #8b32b0;
-      border: none;
-      color: #ffffff;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 16px;
-    }
-
-    .input-field button:hover {
-      background-color: #6a2280;
-    }
   </style>
 </head>
 <body>
@@ -133,32 +72,7 @@
     <div class="total-value" id="totalValue">Loading...</div>
     <div class="button-container">
       <div class="action-button" id="sendButton">Senden</div>
-      <div class="action-button" id="receiveButton">Empfangen</div>
-    </div>
-  </div>
-
-  <div class="send-modal" id="sendModal">
-    <div class="send-modal-content">
-      <span class="close-button" onclick="closeModal()">&times;</span>
-      <h2>Coins senden</h2>
-      <div class="input-field">
-        <label for="coinSelect">Coin auswählen:</label>
-        <select id="coinSelect">
-          <option value="coin1">Coin 1</option>
-          <option value="coin2">Coin 2</option>
-          <option value="coin3">Coin 3</option>
-          <!-- Weitere Optionen hinzufügen -->
-        </select>
-      </div>
-      <div class="input-field">
-        <label for="amountInput">Betrag eingeben:</label>
-        <input type="number" id="amountInput" min="0" step="0.01">
-      </div>
-      <div class="input-field">
-        <label for="recipientInput">Empfänger Adresse:</label>
-        <input type="text" id="recipientInput">
-      </div>
-      <button onclick="sendCoins()">Transaktion senden</button>
+      <div class="action-button" id="receiveButton" onclick="displayWalletAddress()">Empfangen</div>
     </div>
   </div>
 
@@ -169,7 +83,7 @@
       // Verwenden Sie z.B. eine AJAX-Anfrage, um die Daten vom Server abzurufen
 
       // Beispielcode, um den Wert zu aktualisieren (ersetzen Sie dies mit dem entsprechenden Datenbankabgleich)
-      var coinBalance = 100; // Beispielwert
+      var coinBalance = 0; // Startvolumen auf 0 setzen (Beispielwert)
       var totalValue = coinBalance * 1.28; // Gesamtwert berechnen
 
       // Coin-Balance und Gesamtwert aktualisieren
@@ -180,35 +94,17 @@
     // Rufen Sie die Funktion beim Laden der Seite auf
     fetchCoinData();
 
-    // Modal-Funktionen
-    function openModal() {
-      document.getElementById('sendModal').style.display = 'flex';
+    // Funktion zur Anzeige der Wallet-Adresse
+    function displayWalletAddress() {
+      // Führen Sie hier den Datenbankabgleich durch, um die Wallet-Adresse abzurufen
+      // Verwenden Sie z.B. eine AJAX-Anfrage, um die Daten vom Server abzurufen
+
+      // Beispielcode, um die Wallet-Adresse anzuzeigen (ersetzen Sie dies mit dem entsprechenden Datenbankabgleich)
+      var walletAddress = '0x1234567890'; // Beispielwert
+
+      // Zeigen Sie die Wallet-Adresse an
+      alert('Wallet-Adresse: ' + walletAddress);
     }
-
-    function closeModal() {
-      document.getElementById('sendModal').style.display = 'none';
-    }
-
-    // Funktion zum Senden von Coins
-    function sendCoins() {
-      var selectedCoin = document.getElementById('coinSelect').value;
-      var amount = document.getElementById('amountInput').value;
-      var recipient = document.getElementById('recipientInput').value;
-
-      // Führen Sie hier den Datenbankabgleich und die Transaktion durch
-      // Verwenden Sie z.B. eine AJAX-Anfrage, um die Daten an den Server zu senden
-
-      // Beispielcode für eine erfolgreiche Transaktion (ersetzen Sie dies mit dem entsprechenden Datenbankabgleich)
-      alert('Die Transaktion wurde erfolgreich gesendet!');
-
-      // Schließen Sie das Modal und aktualisieren Sie die Coin-Daten
-      closeModal();
-      fetchCoinData();
-    }
-
-    // Event Listener für die Buttons
-    document.getElementById('sendButton').addEventListener('click', openModal);
-    document.getElementById('receiveButton').addEventListener('click', openModal);
   </script>
 </body>
 </html>
