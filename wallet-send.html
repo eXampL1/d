@@ -1,206 +1,214 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MetaMask-like Interface - Send Coins</title>
+  <title>Wallet Send</title>
   <style>
-    /* CSS-Styling für das MetaMask-Interface */
     body {
       font-family: Arial, sans-serif;
-      background-color: #f3f3f3;
-      margin: 0;
-      padding: 0;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
     .container {
-      width: 400px;
-      margin: 0 auto;
-      padding: 20px;
       background-color: #ffffff;
-      border: 1px solid #dddddd;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
       text-align: center;
     }
 
-    .wallet {
-      margin-top: 20px;
-      text-align: center;
+    h1 {
+      margin-bottom: 20px;
+      color: #8b32b0;
     }
 
-    .wallet-address {
-      font-size: 16px;
-      color: #333333;
-      margin-bottom: 5px;
+    .coin-price {
+      font-size: 24px;
+      margin-bottom: 16px;
     }
 
-    .balance {
-      margin-top: 10px;
+    .coin-balance {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .total-value {
       font-size: 14px;
-      color: #333333;
+      color: #666666;
+      margin-bottom: 16px;
     }
 
-    .transaction {
-      margin-top: 20px;
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .action-button {
+      width: 120px;
+      height: 120px;
+      background-color: #8b32b0;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .send-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .send-modal-content {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      width: 300px;
       text-align: center;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
     }
 
     .input-field {
-      margin-bottom: 10px;
+      margin-bottom: 16px;
     }
 
-    .button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 200px;
-      height: 50px;
-      margin: 0 auto;
-      background-color: #8e44ad;
-      color: #ffffff;
-      text-decoration: none;
+    .input-field label {
+      display: block;
+      margin-bottom: 4px;
+      color: #8b32b0;
+    }
+
+    .input-field input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .input-field button {
+      width: 100%;
+      padding: 8px;
+      background-color: #8b32b0;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      color: #ffffff;
       font-size: 16px;
-      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 16px;
     }
 
-    .button:hover {
-      background-color: #7d3c98;
+    .input-field button:hover {
+      background-color: #6a2280;
     }
   </style>
-  <script>
-    var db;
-
-    // Öffnen der Datenbankverbindung
-    var request = indexedDB.open('walletDatabase', 1);
-
-    request.onerror = function() {
-      console.log('Datenbankfehler');
-    };
-
-    request.onsuccess = function() {
-      db = request.result;
-      console.log('Datenbank geöffnet');
-      initializeWallet();
-    };
-
-    request.onupgradeneeded = function(event) {
-      db = event.target.result;
-      console.log('Datenbank erstellt/aktualisiert');
-
-      if (!db.objectStoreNames.contains('wallets')) {
-        var objectStore = db.createObjectStore('wallets', { keyPath: 'address' });
-        objectStore.createIndex('balance', 'balance', { unique: false });
-      }
-    };
-
-    // JavaScript-Code zur Initialisierung der Wallet-Daten
-    function initializeWallet() {
-      var walletAddress = sessionStorage.getItem('walletAddress');
-
-      // Überprüfen, ob eine Wallet-Adresse vorhanden ist
-      if (walletAddress) {
-        document.getElementById('addressInput').innerText = walletAddress;
-
-        // Überprüfen, ob die Wallet bereits in der Datenbank existiert
-        var transaction = db.transaction(['wallets'], 'readwrite');
-        var objectStore = transaction.objectStore('wallets');
-        var getRequest = objectStore.get(walletAddress);
-
-        getRequest.onsuccess = function(event) {
-          var walletData = event.target.result;
-
-          if (walletData) {
-            // Wallet existiert bereits in der Datenbank, Kontostand aktualisieren
-            wallets[walletAddress] = walletData.balance;
-          } else {
-            // Wallet ist neu, initialisieren mit 0 Coins und in der Datenbank speichern
-            wallets[walletAddress] = 0;
-
-            var addRequest = objectStore.add({ address: walletAddress, balance: 0 });
-            addRequest.onsuccess = function() {
-              console.log('Wallet in der Datenbank gespeichert');
-            };
-          }
-
-          updateBalance(walletAddress);
-        };
-
-        getRequest.onerror = function() {
-          console.log('Fehler beim Abrufen der Wallet-Daten aus der Datenbank');
-        };
-      }
-    }
-
-    // JavaScript-Code zur Aktualisierung des Kontostands
-    function updateBalance(address) {
-      var balance = wallets[address];
-      document.getElementById('balance').innerText = balance + ' Coins';
-    }
-
-    // JavaScript-Code zum Senden von Coins
-    function sendCoins() {
-      var senderAddress = sessionStorage.getItem('walletAddress');
-      var receiverAddress = document.getElementById('receiverAddress').value;
-      var quantity = parseInt(document.getElementById('coinQuantity').value);
-
-      // Überprüfen, ob die Empfängeradresse gültig ist
-      if (!wallets[receiverAddress]) {
-        alert('Ungültige Empfängeradresse!');
-        return;
-      }
-
-      // Überprüfen, ob der Absender ausreichend Coins hat
-      if (wallets[senderAddress] < quantity) {
-        alert('Unzureichender Kontostand!');
-        return;
-      }
-
-      // Coins senden und den Kontostand aktualisieren
-      wallets[senderAddress] -= quantity;
-      wallets[receiverAddress] += quantity;
-
-      // Aktualisierung der Kontostände anzeigen
-      updateBalance(senderAddress);
-      updateBalance(receiverAddress);
-
-      // Bestätigungsnachricht anzeigen
-      alert(quantity + ' Coins wurden erfolgreich gesendet!');
-
-      // Aktualisieren der Wallet-Daten in der Datenbank
-      var transaction = db.transaction(['wallets'], 'readwrite');
-      var objectStore = transaction.objectStore('wallets');
-      var updateRequest = objectStore.put({ address: senderAddress, balance: wallets[senderAddress] });
-
-      updateRequest.onsuccess = function() {
-        console.log('Absender-Kontostand in der Datenbank aktualisiert');
-      };
-
-      var updateRequest2 = objectStore.put({ address: receiverAddress, balance: wallets[receiverAddress] });
-
-      updateRequest2.onsuccess = function() {
-        console.log('Empfänger-Kontostand in der Datenbank aktualisiert');
-      };
-    }
-  </script>
 </head>
-<body onload="initializeWallet()">
+<body>
   <div class="container">
-    <div class="wallet">
-      <div class="wallet-address">Wallet-Adresse:</div>
-      <div id="addressInput"></div>
-      <div class="balance">Kontostand: <span id="balance"></span></div>
-    </div>
-    <div class="transaction">
-      <div class="input-field">
-        <input type="text" id="receiverAddress" placeholder="Empfängeradresse" />
-      </div>
-      <div class="input-field">
-        <input type="number" id="coinQuantity" placeholder="Coin-Menge" />
-      </div>
-      <button class="button" onclick="sendCoins()">Coins senden</button>
+    <h1>Wallet Send</h1>
+    <div class="coin-price">Coin-Preis: 1.28 Euro</div>
+    <div class="coin-balance" id="coinBalance">Loading...</div>
+    <div class="total-value" id="totalValue">Loading...</div>
+    <div class="button-container">
+      <div class="action-button" id="sendButton">Senden</div>
+      <div class="action-button" id="receiveButton">Empfangen</div>
     </div>
   </div>
+
+  <div class="send-modal" id="sendModal">
+    <div class="send-modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h2>Coins senden</h2>
+      <div class="input-field">
+        <label for="coinSelect">Coin auswählen:</label>
+        <select id="coinSelect">
+          <option value="coin1">Coin 1</option>
+          <option value="coin2">Coin 2</option>
+          <option value="coin3">Coin 3</option>
+          <!-- Weitere Optionen hinzufügen -->
+        </select>
+      </div>
+      <div class="input-field">
+        <label for="amountInput">Betrag eingeben:</label>
+        <input type="number" id="amountInput" min="0" step="0.01">
+      </div>
+      <div class="input-field">
+        <label for="recipientInput">Empfänger Adresse:</label>
+        <input type="text" id="recipientInput">
+      </div>
+      <button onclick="sendCoins()">Transaktion senden</button>
+    </div>
+  </div>
+
+  <script>
+    // Funktion zum Abrufen der Coin-Balance und des Gesamtwerts von der Datenbank
+    function fetchCoinData() {
+      // Führen Sie hier den Datenbankabgleich durch und aktualisieren Sie die Werte
+      // Verwenden Sie z.B. eine AJAX-Anfrage, um die Daten vom Server abzurufen
+
+      // Beispielcode, um den Wert zu aktualisieren (ersetzen Sie dies mit dem entsprechenden Datenbankabgleich)
+      var coinBalance = 100; // Beispielwert
+      var totalValue = coinBalance * 1.28; // Gesamtwert berechnen
+
+      // Coin-Balance und Gesamtwert aktualisieren
+      document.getElementById('coinBalance').textContent = 'Coin-Balance: ' + coinBalance.toFixed(2);
+      document.getElementById('totalValue').textContent = 'Gesamtwert: ' + totalValue.toFixed(2) + ' Euro';
+    }
+
+    // Rufen Sie die Funktion beim Laden der Seite auf
+    fetchCoinData();
+
+    // Modal-Funktionen
+    function openModal() {
+      document.getElementById('sendModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('sendModal').style.display = 'none';
+    }
+
+    // Funktion zum Senden von Coins
+    function sendCoins() {
+      var selectedCoin = document.getElementById('coinSelect').value;
+      var amount = document.getElementById('amountInput').value;
+      var recipient = document.getElementById('recipientInput').value;
+
+      // Führen Sie hier den Datenbankabgleich und die Transaktion durch
+      // Verwenden Sie z.B. eine AJAX-Anfrage, um die Daten an den Server zu senden
+
+      // Beispielcode für eine erfolgreiche Transaktion (ersetzen Sie dies mit dem entsprechenden Datenbankabgleich)
+      alert('Die Transaktion wurde erfolgreich gesendet!');
+
+      // Schließen Sie das Modal und aktualisieren Sie die Coin-Daten
+      closeModal();
+      fetchCoinData();
+    }
+
+    // Event Listener für die Buttons
+    document.getElementById('sendButton').addEventListener('click', openModal);
+    document.getElementById('receiveButton').addEventListener('click', openModal);
+  </script>
 </body>
 </html>
